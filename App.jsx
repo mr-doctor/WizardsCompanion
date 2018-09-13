@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -11,10 +12,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import React from 'react';
-import { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-var instructions = Platform.select({
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = require("react");
+var react_2 = require("react");
+var react_native_1 = require("react-native");
+var instructions = react_native_1.Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android: 'Double tap R on your keyboard to reload,\n' +
         'Shake or press menu button for dev menu',
@@ -25,16 +27,16 @@ var App = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     App.prototype.render = function () {
-        return (<View>
-			<Text>
-				Help
-			</Text>
-		</View>);
+        return (<react_native_1.View style={styles.container}>
+        <react_native_1.Text style={styles.welcome}>Just fucking kill me already.</react_native_1.Text>
+        <react_native_1.Text style={styles.instructions}>React native is actually terrible.</react_native_1.Text>
+        <react_native_1.Text style={styles.instructions}>{instructions}</react_native_1.Text>
+      </react_native_1.View>);
     };
     return App;
-}(Component));
-export default App;
-var styles = StyleSheet.create({
+}(react_2.Component));
+exports.default = App;
+var styles = react_native_1.StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
