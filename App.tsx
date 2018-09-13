@@ -1,44 +1,21 @@
 import React from 'react';
 import {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {AppRegistry, Button, Platform, StyleSheet, Text, View} from 'react-native';
 import {createStackNavigator,} from 'react-navigation';
-import {HomeScreen} from "./screens/HomeScreen";
 import {SpellbookScreen} from "./screens/SpellbookScreen";
-import {Navigation} from "react-native-navigation";
+import {Router, Scene, Stack} from "react-native-router-flux";
+import {HomeScreen} from "./screens/HomeScreen";
+import {Store} from "react-native-navigation/lib/dist/components/Store";
 
-const instructions = Platform.select({
-	ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-	android:
-		'Double tap R on your keyboard to reload,\n' +
-		'Shake or press menu button for dev menu',
-});
+const App: React.SFC<{ store: Store }> = (props) => {
+    return (
+        <Router>
+            <Stack key="root">
+                <Scene key="home" component={HomeScreen} title="Home Screen"/>
+                <Scene key="spellbook" component={SpellbookScreen} title="Spellbook"/>
+            </Stack>
+        </Router>
+    );
+};
 
-type Props = {};
-export default class App extends Component<Props> {
-	render() {
-		return (<View>
-			<Text>
-				Help
-			</Text>
-		</View>);
-	}
-}
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
-	},
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5,
-	},
-});
+export default App;
