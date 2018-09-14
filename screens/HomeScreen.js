@@ -17,7 +17,9 @@ import { Actions } from "react-native-router-flux";
 var HomeScreen = /** @class */ (function (_super) {
     __extends(HomeScreen, _super);
     function HomeScreen() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.spellbooks = [];
+        return _this;
     }
     HomeScreen.prototype.goToSpellbook = function () {
         console.log("pressed");
@@ -26,7 +28,9 @@ var HomeScreen = /** @class */ (function (_super) {
     HomeScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-                <Button onPress={function () { return _this.goToSpellbook(); }} title="Spellbook" color="#841584" accessibilityLabel="Learn more about this purple button"/>
+                {this.spellbooks.map(function (spellbook) {
+            return <Button onPress={function () { return _this.goToSpellbook(spellbook); }} title="Spellbook" color="#841584"/>;
+        })}
             </View>);
     };
     HomeScreen.navigationOptions = {

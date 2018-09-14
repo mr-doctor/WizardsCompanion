@@ -8,6 +8,8 @@ class HomeScreen extends React.Component {
         title: 'Welcome',
     };
 
+    spellbooks: SpellbookModel[] = [];
+
     goToSpellbook() {
         console.log("pressed");
         Actions.push("spellbook");
@@ -15,12 +17,13 @@ class HomeScreen extends React.Component {
 
     render() {
         return (<View>
-                <Button
-                    onPress={() => this.goToSpellbook()}
-                    title="Spellbook"
-                    color="#841584"
-                    accessibilityLabel="Learn more about this purple button"
-                />
+                {this.spellbooks.map(spellbook =>
+                    <Button
+                        onPress={() => this.goToSpellbook(spellbook)}
+                        title="Spellbook"
+                        color="#841584"
+                    />)
+                }
             </View>
         );
     }

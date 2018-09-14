@@ -20,9 +20,14 @@ var SpellbookScreen = /** @class */ (function (_super) {
     }
     SpellbookScreen.prototype.render = function () {
         return (<View>
-				<Text>Just fucking kill me already.</Text>
-			</View>);
+                <Text>Just fucking kill me already.</Text>
+            </View>);
     };
     return SpellbookScreen;
 }(React.Component));
+var SpellbookModel = /** @class */ (function () {
+    function SpellbookModel() {
+    }
+    return SpellbookModel;
+}());
 export { SpellbookScreen };
