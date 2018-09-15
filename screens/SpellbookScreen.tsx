@@ -1,18 +1,34 @@
 import {Button, View, Text} from "react-native";
 import * as React from "react";
+import {SpellModel, SpellScreen} from "./SpellScreen";
+import {Actions} from "react-native-router-flux";
 
-class SpellbookScreen extends React.Component {
-
-    render() {
-        return (<View>
-                <Text>Just fucking kill me already.</Text>
-            </View>
-        );
-    }
+type ScreenProps = {
+	model: SpellbookModel;
 }
 
-class SpellbookModel {
+type ModelProps = {
 
 }
 
-export {SpellbookScreen};
+class SpellbookScreen extends React.Component<ScreenProps> {
+	
+	jumpToSpell(spell: SpellModel) {
+		Actions.push("spell", {spell})
+	}
+	
+	render() {
+		return (<View>
+				{
+					this.props.model.spells.map(spell => <Button title={spell.props.name} onPress={() => this.jumpToSpell(spell)}/>)
+				}
+			</View>
+		);
+	}
+}
+
+class SpellbookModel extends React.Component<ModelProps> {
+	spells: SpellModel[] = [];
+}
+
+export {SpellbookScreen, SpellbookModel};

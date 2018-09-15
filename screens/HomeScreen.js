@@ -21,17 +21,17 @@ var HomeScreen = /** @class */ (function (_super) {
         _this.spellbooks = [];
         return _this;
     }
-    HomeScreen.prototype.goToSpellbook = function () {
+    HomeScreen.prototype.goToSpellbook = function (spellbook) {
         console.log("pressed");
-        Actions.push("spellbook");
+        Actions.push("spellbook", { spellbook: spellbook });
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-                {this.spellbooks.map(function (spellbook) {
+				{this.spellbooks.map(function (spellbook) {
             return <Button onPress={function () { return _this.goToSpellbook(spellbook); }} title="Spellbook" color="#841584"/>;
         })}
-            </View>);
+			</View>);
     };
     HomeScreen.navigationOptions = {
         title: 'Welcome',
