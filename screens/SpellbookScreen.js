@@ -19,18 +19,48 @@ var SpellbookScreen = /** @class */ (function (_super) {
     function SpellbookScreen(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            spellbook: _this.props.model,
+            spellbook: _this.props.spellbook,
         };
         return _this;
     }
     SpellbookScreen.prototype.jumpToSpell = function (spell) {
         Actions.push("spell", { spell: spell });
     };
+    SpellbookScreen.prototype.newSpell = function () {
+        var index = 1;
+        for (var i = 0; i < this.state.spellbook.spells.length; i++) {
+            if (this.state.spellbook.spells[i].name.localeCompare("Spell " + index) == 0) {
+                index++;
+            }
+        }
+        var spell = {
+            name: "Spell " + index,
+            spellbookName: "",
+            spellbookID: "",
+            spellID: "",
+            diceType: "",
+            castTime: "",
+            range: "",
+            dice: 0,
+            effectType: "",
+            desc: "",
+            extraEffect: 0,
+            duration: 0,
+            durationType: "",
+        };
+        this.setState({
+            spellbook: {
+                spells: this.state.spellbook.spells.concat(spell),
+                name: this.state.spellbook.name,
+            }
+        });
+    };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-                {this.state.spellbook.spells.map(function (spell) { return <Button title={spell.name} onPress={function () { return _this.jumpToSpell(spell); }}/>; })}
-            </View>);
+				{this.state.spellbook.spells.map(function (spell) { return <Button title={spell.name} onPress={function () { return _this.jumpToSpell(spell); }}/>; })}
+				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
+			</View>);
     };
     return SpellbookScreen;
 }(React.Component));

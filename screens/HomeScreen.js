@@ -19,7 +19,7 @@ var HomeScreen = /** @class */ (function (_super) {
     function HomeScreen(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            spellbooks: []
+            spellbooks: [],
         };
         return _this;
     }
@@ -28,16 +28,22 @@ var HomeScreen = /** @class */ (function (_super) {
         Actions.push("spellbook", { spellbook: spellbook });
     };
     HomeScreen.prototype.newSpellbook = function () {
-        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook 1" }) });
+        var index = 1;
+        for (var i = 0; i < this.state.spellbooks.length; i++) {
+            if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+                index++;
+            }
+        }
+        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index }) });
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-                {this.state.spellbooks.map(function (spellbook) {
+				{this.state.spellbooks.map(function (spellbook) {
             return <Button onPress={function () { return _this.goToSpellbook(spellbook); }} title={spellbook.name} color="#841584"/>;
         })}
-                <Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
-            </View>);
+				<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+			</View>);
     };
     HomeScreen.navigationOptions = {
         title: 'Welcome',

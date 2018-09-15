@@ -16,7 +16,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
         super(props);
 
         this.state = {
-            spell: props.model,
+            spell: props.spellbook,
         }
     }
 
