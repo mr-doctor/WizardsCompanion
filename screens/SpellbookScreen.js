@@ -16,8 +16,12 @@ import * as React from "react";
 import { Actions } from "react-native-router-flux";
 var SpellbookScreen = /** @class */ (function (_super) {
     __extends(SpellbookScreen, _super);
-    function SpellbookScreen() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SpellbookScreen(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            spellbook: _this.props.model,
+        };
+        return _this;
     }
     SpellbookScreen.prototype.jumpToSpell = function (spell) {
         Actions.push("spell", { spell: spell });
@@ -25,18 +29,9 @@ var SpellbookScreen = /** @class */ (function (_super) {
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.props.model.spells.map(function (spell) { return <Button title={spell.props.name} onPress={function () { return _this.jumpToSpell(spell); }}/>; })}
-			</View>);
+                {this.state.spellbook.spells.map(function (spell) { return <Button title={spell.name} onPress={function () { return _this.jumpToSpell(spell); }}/>; })}
+            </View>);
     };
     return SpellbookScreen;
 }(React.Component));
-var SpellbookModel = /** @class */ (function (_super) {
-    __extends(SpellbookModel, _super);
-    function SpellbookModel() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.spells = [];
-        return _this;
-    }
-    return SpellbookModel;
-}(React.Component));
-export { SpellbookScreen, SpellbookModel };
+export { SpellbookScreen };

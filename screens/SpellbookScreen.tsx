@@ -7,28 +7,37 @@ type ScreenProps = {
 	model: SpellbookModel;
 }
 
-type ModelProps = {
-
+type StateType = {
+    spellbook: SpellbookModel;
 }
 
-class SpellbookScreen extends React.Component<ScreenProps> {
-	
-	jumpToSpell(spell: SpellModel) {
-		Actions.push("spell", {spell})
-	}
-	
-	render() {
-		return (<View>
-				{
-					this.props.model.spells.map(spell => <Button title={spell.props.name} onPress={() => this.jumpToSpell(spell)}/>)
-				}
-			</View>
-		);
-	}
+class SpellbookScreen extends React.Component<ScreenProps, StateType> {
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            spellbook: this.props.model,
+        }
+    }
+
+    jumpToSpell(spell: SpellModel) {
+        Actions.push("spell", {spell})
+    }
+
+    render() {
+        return (<View>
+                {
+                    this.state.spellbook.spells.map(spell => <Button title={spell.name}
+                                                                 onPress={() => this.jumpToSpell(spell)}/>)
+                }
+            </View>
+        );
+    }
+}
+export type SpellbookModel = {
+    spells: SpellModel[],
+    name: string
 }
 
-class SpellbookModel extends React.Component<ModelProps> {
-	spells: SpellModel[] = [];
-}
-
-export {SpellbookScreen, SpellbookModel};
+export {SpellbookScreen};

@@ -3,33 +3,43 @@ import * as React from "react";
 import {SpellbookModel} from "./SpellbookScreen";
 
 type ScreenProps = {
-	model: SpellModel;
+    model: SpellModel;
 }
 
-type ModelProps = {
-	name: string;
-	spellbookName: string;
-	spellbookID: string;
-	spellID: string;
+type StateType = {
+    spell: SpellModel;
 }
 
-class SpellScreen extends React.Component<ScreenProps> {
-	render() {
-		return {};
-	}
-	
+class SpellScreen extends React.Component<ScreenProps, StateType> {
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            spell: props.model,
+        }
+    }
+
+    render() {
+        return (<Text>{this.state.spell.name}</Text>);
+    }
+
 }
 
-class SpellModel extends React.Component<ModelProps> {
-	diceType: string = "";
-	castTime: string = "";
-	range: string = "";
-	dice: number = 0;
-	effectType: string = "";
-	desc: string = "";
-	extraEffect: number = 0;
-	duration: number = 0;
-	durationType: string = "";
+type SpellModel = {
+    name: string;
+    spellbookName: string;
+    spellbookID: string;
+    spellID: string;
+    diceType: string,
+    castTime: string,
+    range: string,
+    dice: number,
+    effectType: string,
+    desc: string,
+    extraEffect: number,
+    duration: number,
+    durationType: string,
 }
 
 export {SpellScreen, SpellModel};

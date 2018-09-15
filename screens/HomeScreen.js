@@ -16,22 +16,28 @@ import * as React from "react";
 import { Actions } from "react-native-router-flux";
 var HomeScreen = /** @class */ (function (_super) {
     __extends(HomeScreen, _super);
-    function HomeScreen() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.spellbooks = [];
+    function HomeScreen(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            spellbooks: []
+        };
         return _this;
     }
     HomeScreen.prototype.goToSpellbook = function (spellbook) {
         console.log("pressed");
         Actions.push("spellbook", { spellbook: spellbook });
     };
+    HomeScreen.prototype.newSpellbook = function () {
+        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook 1" }) });
+    };
     HomeScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.spellbooks.map(function (spellbook) {
-            return <Button onPress={function () { return _this.goToSpellbook(spellbook); }} title="Spellbook" color="#841584"/>;
+                {this.state.spellbooks.map(function (spellbook) {
+            return <Button onPress={function () { return _this.goToSpellbook(spellbook); }} title={spellbook.name} color="#841584"/>;
         })}
-			</View>);
+                <Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+            </View>);
     };
     HomeScreen.navigationOptions = {
         title: 'Welcome',

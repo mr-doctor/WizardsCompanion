@@ -11,32 +11,20 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+import { Text } from "react-native";
 import * as React from "react";
 var SpellScreen = /** @class */ (function (_super) {
     __extends(SpellScreen, _super);
-    function SpellScreen() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function SpellScreen(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            spell: props.model,
+        };
+        return _this;
     }
     SpellScreen.prototype.render = function () {
-        return {};
+        return (<Text>{this.state.spell.name}</Text>);
     };
     return SpellScreen;
 }(React.Component));
-var SpellModel = /** @class */ (function (_super) {
-    __extends(SpellModel, _super);
-    function SpellModel() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.diceType = "";
-        _this.castTime = "";
-        _this.range = "";
-        _this.dice = 0;
-        _this.effectType = "";
-        _this.desc = "";
-        _this.extraEffect = 0;
-        _this.duration = 0;
-        _this.durationType = "";
-        return _this;
-    }
-    return SpellModel;
-}(React.Component));
-export { SpellScreen, SpellModel };
+export { SpellScreen };
