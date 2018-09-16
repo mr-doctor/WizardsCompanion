@@ -3,7 +3,7 @@ import * as React from "react";
 import {SpellbookModel} from "./SpellbookScreen";
 
 type ScreenProps = {
-    model: SpellModel;
+    spell: SpellModel;
 }
 
 type StateType = {
@@ -16,7 +16,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
         super(props);
 
         this.state = {
-            spell: props.spellbook,
+            spell: props.spell,
         }
     }
 

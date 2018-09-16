@@ -11,9 +11,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, View } from "react-native";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
+import { styles } from "./HomeScreen";
 var SpellbookScreen = /** @class */ (function (_super) {
     __extends(SpellbookScreen, _super);
     function SpellbookScreen(props) {
@@ -35,9 +36,10 @@ var SpellbookScreen = /** @class */ (function (_super) {
         }
         var spell = {
             name: "Spell " + index,
-            spellbookName: "",
-            spellbookID: "",
-            spellID: "",
+            spellbookName: this.state.spellbook.name,
+            spellbookID: this.state.spellbook.id,
+            // Unique ID generation from https://gist.github.com/6174/6062387
+            spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
             diceType: "",
             castTime: "",
             range: "",
@@ -52,13 +54,19 @@ var SpellbookScreen = /** @class */ (function (_super) {
             spellbook: {
                 spells: this.state.spellbook.spells.concat(spell),
                 name: this.state.spellbook.name,
+                id: this.state.spellbook.id,
             }
         });
     };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.state.spellbook.spells.map(function (spell) { return <Button title={spell.name} onPress={function () { return _this.jumpToSpell(spell); }}/>; })}
+				{this.state.spellbook.spells.map(function (spell) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell); }} style={styles.listItem}>
+						<Text>
+							{spell.name}
+						</Text>
+						<View style={styles.line}></View>
+					</TouchableOpacity>; })}
 				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
 			</View>);
     };

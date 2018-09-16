@@ -18,7 +18,7 @@ var SpellScreen = /** @class */ (function (_super) {
     function SpellScreen(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            spell: props.spellbook,
+            spell: props.spell,
         };
         return _this;
     }

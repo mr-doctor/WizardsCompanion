@@ -1,7 +1,8 @@
-import {Button, View} from "react-native";
+import {Button, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import {SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
+import {styles} from "./HomeScreen";
 
 type ScreenProps = {
 	spellbook: SpellbookModel;
@@ -22,11 +23,11 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	jumpToSpell(spell: SpellModel) {
-		Actions.push("spell", {spell})
+		Actions.push("spell", {spell: spell})
 	}
 	
 	newSpell() {
-		var index = 1;
+		let index = 1;
 		for (let i = 0; i < this.state.spellbook.spells.length; i++) {
 			if (this.state.spellbook.spells[i].name.localeCompare("Spell " + index) == 0) {
 				index++;
@@ -34,9 +35,10 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 		}
 		const spell: SpellModel = {
 			name: "Spell " + index,
-			spellbookName: "",
-			spellbookID: "",
-			spellID: "",
+			spellbookName: this.state.spellbook.name,
+			spellbookID: this.state.spellbook.id,
+			// Unique ID generation from https://gist.github.com/6174/6062387
+			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
 			diceType: "",
 			castTime: "",
 			range: "",
@@ -52,6 +54,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			spellbook: {
 				spells: this.state.spellbook.spells.concat(spell),
 				name: this.state.spellbook.name,
+				id: this.state.spellbook.id,
 			}
 		})
 	}
@@ -59,10 +62,15 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 	render() {
 		return (<View>
 				{
-					this.state.spellbook.spells.map(spell => <Button
-						title={spell.name}
+					this.state.spellbook.spells.map(spell => <TouchableOpacity
 						onPress={() => this.jumpToSpell(spell)}
-					/>)
+						style={styles.listItem}
+					>
+						<Text>
+							{spell.name}
+						</Text>
+						<View style={styles.line}></View>
+					</TouchableOpacity>)
 				}
 				<Button title={"+"} onPress={() => this.newSpell()}/>
 			</View>
@@ -73,6 +81,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 export type SpellbookModel = {
 	spells: SpellModel[],
 	name: string
+	id: string;
 }
 
 export {SpellbookScreen};

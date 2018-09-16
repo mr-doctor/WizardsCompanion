@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, View } from "react-native";
+import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
 var HomeScreen = /** @class */ (function (_super) {
@@ -34,13 +34,17 @@ var HomeScreen = /** @class */ (function (_super) {
                 index++;
             }
         }
-        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index }) });
+        // Unique ID generation from https://gist.github.com/6174/6062387
+        var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id }) });
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
         return (<View>
 				{this.state.spellbooks.map(function (spellbook) {
-            return <Button onPress={function () { return _this.goToSpellbook(spellbook); }} title={spellbook.name} color="#841584"/>;
+            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook); }} style={styles.listItem}>
+						<Text>{spellbook.name}</Text>
+					</TouchableOpacity>;
         })}
 				<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
 			</View>);
@@ -50,4 +54,17 @@ var HomeScreen = /** @class */ (function (_super) {
     };
     return HomeScreen;
 }(React.Component));
+export var styles = StyleSheet.create({
+    listItem: {
+        borderRadius: 0,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+        backgroundColor: "#878787",
+        width: "90%",
+        height: 40,
+        alignItems: "center",
+        justifyContent: 'center',
+        alignSelf: "center",
+    },
+});
 export { HomeScreen };
