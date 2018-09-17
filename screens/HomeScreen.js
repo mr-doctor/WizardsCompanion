@@ -41,8 +41,8 @@ var HomeScreen = /** @class */ (function (_super) {
     HomeScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.state.spellbooks.map(function (spellbook) {
-            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook); }} style={styles.listItem}>
+				{this.state.spellbooks.map(function (spellbook, i) {
+            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook); }} style={styles.listItem} key={i}>
 						<Text>{spellbook.name}</Text>
 					</TouchableOpacity>;
         })}
@@ -50,7 +50,7 @@ var HomeScreen = /** @class */ (function (_super) {
 			</View>);
     };
     HomeScreen.navigationOptions = {
-        title: 'Welcome',
+        title: "Wizard's Companion",
     };
     return HomeScreen;
 }(React.Component));

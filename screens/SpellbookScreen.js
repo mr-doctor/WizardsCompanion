@@ -58,14 +58,17 @@ var SpellbookScreen = /** @class */ (function (_super) {
             }
         });
     };
+    /*componentDidMount() {
+        Actions.refresh({title: this.state.spellbook.name});
+    }*/
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.state.spellbook.spells.map(function (spell) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell); }} style={styles.listItem}>
+				{this.state.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell); }} style={styles.listItem} key={i}>
 						<Text>
 							{spell.name}
 						</Text>
-						<View style={styles.line}></View>
+						
 					</TouchableOpacity>; })}
 				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
 			</View>);

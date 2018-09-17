@@ -13,19 +13,21 @@ type StateType = {
 }
 
 class SpellbookScreen extends React.Component<ScreenProps, StateType> {
-	
+
 	constructor(props: any) {
 		super(props);
-		
+
 		this.state = {
 			spellbook: this.props.spellbook,
-		}
+		};
+
+
 	}
-	
+
 	jumpToSpell(spell: SpellModel) {
 		Actions.push("spell", {spell: spell})
 	}
-	
+
 	newSpell() {
 		let index = 1;
 		for (let i = 0; i < this.state.spellbook.spells.length; i++) {
@@ -49,7 +51,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			duration: 0,
 			durationType: "",
 		};
-		
+
 		this.setState({
 			spellbook: {
 				spells: this.state.spellbook.spells.concat(spell),
@@ -58,18 +60,23 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			}
 		})
 	}
-	
+
+	/*componentDidMount() {
+		Actions.refresh({title: this.state.spellbook.name});
+	}*/
+
 	render() {
 		return (<View>
 				{
-					this.state.spellbook.spells.map(spell => <TouchableOpacity
+					this.state.spellbook.spells.map((spell, i) => <TouchableOpacity
 						onPress={() => this.jumpToSpell(spell)}
 						style={styles.listItem}
+						key={i}
 					>
 						<Text>
 							{spell.name}
 						</Text>
-						<View style={styles.line}></View>
+						{/*<View style={styles.line}></View>*/}
 					</TouchableOpacity>)
 				}
 				<Button title={"+"} onPress={() => this.newSpell()}/>
