@@ -3,6 +3,8 @@ import * as React from "react";
 import {SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
+import {Icon} from "react-native-vector-icons/Icon";
+
 
 type ScreenProps = {
 	spellbook: SpellbookModel;
@@ -19,13 +21,13 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 
 		this.state = {
 			spellbook: this.props.spellbook,
-		};
+		}
 
 
 	}
 
 	jumpToSpell(spell: SpellModel) {
-		Actions.push("spell", {spell: spell})
+		Actions.push("spell", {spell: spell, title: spell.name})
 	}
 
 	newSpell() {
@@ -61,10 +63,6 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 		})
 	}
 
-	/*componentDidMount() {
-		Actions.refresh({title: this.state.spellbook.name});
-	}*/
-
 	render() {
 		return (<View>
 				{
@@ -79,9 +77,11 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 						{/*<View style={styles.line}></View>*/}
 					</TouchableOpacity>)
 				}
-				<Button title={"+"} onPress={() => this.newSpell()}/>
+				<TouchableOpacity onPress={() => this.newSpell()}><View>
+					<Icon name={"plus"}/>
+				</View></TouchableOpacity>
 			</View>
-		);
+		)
 	}
 }
 

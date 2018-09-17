@@ -11,10 +11,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
+import { Icon } from "react-native-vector-icons/Icon";
 var SpellbookScreen = /** @class */ (function (_super) {
     __extends(SpellbookScreen, _super);
     function SpellbookScreen(props) {
@@ -25,7 +26,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
         return _this;
     }
     SpellbookScreen.prototype.jumpToSpell = function (spell) {
-        Actions.push("spell", { spell: spell });
+        Actions.push("spell", { spell: spell, title: spell.name });
     };
     SpellbookScreen.prototype.newSpell = function () {
         var index = 1;
@@ -58,9 +59,6 @@ var SpellbookScreen = /** @class */ (function (_super) {
             }
         });
     };
-    /*componentDidMount() {
-        Actions.refresh({title: this.state.spellbook.name});
-    }*/
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
@@ -70,7 +68,9 @@ var SpellbookScreen = /** @class */ (function (_super) {
 						</Text>
 						
 					</TouchableOpacity>; })}
-				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
+				<TouchableOpacity onPress={function () { return _this.newSpell(); }}><View>
+					<Icon name={"plus"}/>
+				</View></TouchableOpacity>
 			</View>);
     };
     return SpellbookScreen;

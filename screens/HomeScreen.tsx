@@ -24,7 +24,7 @@ class HomeScreen extends React.Component<PropType, StateType> {
 
 	goToSpellbook(spellbook: SpellbookModel) {
 		console.log("pressed");
-		Actions.push("spellbook", {spellbook: spellbook});
+		Actions.push("spellbook", {spellbook: spellbook, title: spellbook.name});
 	}
 
 	newSpellbook() {

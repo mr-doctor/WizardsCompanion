@@ -8,6 +8,7 @@
     "android-windows": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android livereload"
   },
   "dependencies": {
+    "@types/react-native-vector-icons": "^4.6.3",
     "@types/react-navigation": "^2.0.20",
     "adb": "^0.2.0",
     "babel-preset-react-native": "2.1.0",
@@ -15,9 +16,10 @@
     "fb-watchman": "^2.0.0",
     "react": "16.4.1",
     "react-native": "^0.55.4",
+    "react-native-icons": "^0.7.1",
     "react-native-navigation": "^2.0.2544",
-    "react-navigation": "^2.14.0",
-    "react-native-router-flux": "latest"
+    "react-native-router-flux": "latest",
+    "react-navigation": "^2.14.0"
   },
   "devDependencies": {
     "@types/react": "^16.4.14",

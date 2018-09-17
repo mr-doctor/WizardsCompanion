@@ -25,7 +25,7 @@ var HomeScreen = /** @class */ (function (_super) {
     }
     HomeScreen.prototype.goToSpellbook = function (spellbook) {
         console.log("pressed");
-        Actions.push("spellbook", { spellbook: spellbook });
+        Actions.push("spellbook", { spellbook: spellbook, title: spellbook.name });
     };
     HomeScreen.prototype.newSpellbook = function () {
         var index = 1;
