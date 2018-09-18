@@ -3,7 +3,7 @@ import * as React from "react";
 import {SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
-import {Icon} from "react-native-vector-icons/Icon";
+// import {Icon} from "../node_modules/@types/react-native-vector-icons/Icon";
 
 
 type ScreenProps = {
@@ -37,7 +37,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 				index++;
 			}
 		}
-		const spell: SpellModel = {
+		/*const spell: SpellModel = {
 			name: "Spell " + index,
 			spellbookName: this.state.spellbook.name,
 			spellbookID: this.state.spellbook.id,
@@ -52,6 +52,22 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			extraEffect: 0,
 			duration: 0,
 			durationType: "",
+		};*/
+		const spell: SpellModel = {
+			name: "Spell " + index,
+			spellbookName: this.state.spellbook.name,
+			spellbookID: this.state.spellbook.id,
+			// Unique ID generation from https://gist.github.com/6174/6062387
+			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+			diceType: "d8",
+			castTime: "Instantaneous",
+			range: "1",
+			dice: 0,
+			effectType: "Force",
+			desc: "Hits da ting mon",
+			extraEffect: 4,
+			duration: 6,
+			durationType: "Hours",
 		};
 
 		this.setState({
@@ -77,9 +93,10 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 						{/*<View style={styles.line}></View>*/}
 					</TouchableOpacity>)
 				}
-				<TouchableOpacity onPress={() => this.newSpell()}><View>
-					<Icon name={"plus"}/>
-				</View></TouchableOpacity>
+				{/*<TouchableOpacity onPress={() => this.newSpell()}><View>
+					<Text>+</Text>
+				</View></TouchableOpacity>*/}
+				<Button title={"+"} onPress={() => this.newSpell()}/>
 			</View>
 		)
 	}

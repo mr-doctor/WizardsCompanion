@@ -55,6 +55,15 @@ var HomeScreen = /** @class */ (function (_super) {
     return HomeScreen;
 }(React.Component));
 export var styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
+    spellInformation: {
+        margin: 15,
+        fontSize: 20
+    },
     listItem: {
         borderRadius: 0,
         borderWidth: 0.5,

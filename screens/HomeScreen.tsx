@@ -58,6 +58,17 @@ class HomeScreen extends React.Component<PropType, StateType> {
 }
 
 export const styles = StyleSheet.create({
+	
+	actionButtonIcon: {
+		fontSize: 20,
+		height: 22,
+		color: 'white',
+	},
+	
+	spellInformation: {
+		margin: 15,
+		fontSize: 20
+	},
 
 	listItem: {
 		borderRadius: 0,
