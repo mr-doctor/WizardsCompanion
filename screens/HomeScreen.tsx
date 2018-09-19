@@ -70,6 +70,11 @@ export const styles = StyleSheet.create({
 		fontSize: 20
 	},
 
+	dropdown: {
+		width: "90%",
+		alignSelf: "center"
+	},
+
 	listItem: {
 		borderRadius: 0,
 		borderWidth: 0.5,

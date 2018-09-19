@@ -60,14 +60,14 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			// Unique ID generation from https://gist.github.com/6174/6062387
 			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
 			diceType: "d8",
-			castTime: "Instantaneous",
+			castTime: "Action",
 			range: "1",
-			dice: 0,
+			dice: 1,
 			effectType: "Force",
 			desc: "Hits da ting mon",
 			extraEffect: 4,
 			duration: 6,
-			durationType: "Hours",
+			durationType: "Instantaneous",
 		};
 
 		this.setState({

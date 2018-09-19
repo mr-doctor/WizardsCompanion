@@ -64,6 +64,10 @@ export var styles = StyleSheet.create({
         margin: 15,
         fontSize: 20
     },
+    dropdown: {
+        width: "90%",
+        alignSelf: "center"
+    },
     listItem: {
         borderRadius: 0,
         borderWidth: 0.5,
