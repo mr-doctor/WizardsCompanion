@@ -3,7 +3,7 @@ import * as React from "react";
 import {SpellbookModel} from "./SpellbookScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
-import { FloatingAction } from 'react-native-floating-action';
+import {FloatingAction} from 'react-native-floating-action';
 
 type ScreenProps = {
 	spell: SpellModel;
@@ -17,48 +17,35 @@ const FabConfig = {
 	edit: {
 		text: "Edit",
 		name: "edit",
-		position: 1,
+		position: 2,
 	},
 	upload: {
 		text: "Upload",
 		name: "upload",
-		position: 2,
+		position: 1,
 	},
 };
 
 class SpellScreen extends React.Component<ScreenProps, StateType> {
-	
+
 	constructor(props: any) {
 		super(props);
-		
+
 		this.state = {
 			spell: props.spell,
 		};
-		
+
 	}
-	
-	log(name: string) {
-		console.log(`selected button: ${name}`);
-	}
-	
+
 	render() {
 
-		const actions = [{
-			text: FabConfig.edit.text,
-			position: FabConfig.edit.position,
-			name: FabConfig.edit.name,
-		}, {
-			text: FabConfig.upload.text,
-			position: FabConfig.upload.position,
-			name: FabConfig.upload.name,
-		}];
-		
-		return (/*<View style={{flex:1, backgroundColor: "#ffffff"}}>
+		return (<View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
 			<Text style={styles.spellInformation}>
 				{this.state.spell.castTime}
 			</Text>
 			<Text style={styles.spellInformation}>
-				{this.state.spell.range + (("Melee".localeCompare(this.state.spell.range) == 0 ||
+				{this.state.spell.range + ((
+					"Melee".localeCompare(this.state.spell.range) == 0 ||
 					"0".localeCompare(this.state.spell.range) == 0 ||
 					"".localeCompare(this.state.spell.range) == 0) ? "" : " metres")}
 			</Text>
@@ -75,32 +62,43 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 			<Text style={styles.spellInformation}>
 				{this.state.spell.desc}
 			</Text>
-			<ActionButton>
-				<ActionButton.Item title={"Edit"} onPress={() => this.edit()}/>
-			</ActionButton>
-		</View>*/
-			<View style={{flex:1, backgroundColor: '#f3f3f3'}}>
-				<FloatingAction actions={actions}
-				onPressItem={
-					(name) => {
-						if (FabConfig.edit.name.localeCompare(name + "") == 0) {
-							this.edit();
-						}
-					}
-				}/>
-			</View>);
+
+			{this.fabButton()}
+		</View>);
 	}
-	/*
+
 	fabButton() {
+		const actions = [{
+			text: FabConfig.edit.text,
+			position: FabConfig.edit.position,
+			name: FabConfig.edit.name,
+		}, {
+			text: FabConfig.upload.text,
+			position: FabConfig.upload.position,
+			name: FabConfig.upload.name,
+		}];
 		return (
-		
+			<FloatingAction actions={actions} onPressItem={
+				(name) => {
+					if (FabConfig.edit.name.localeCompare(name + "") == 0) {
+						this.edit();
+					} else {
+						this.upload();
+					}
+				}
+			}/>
 		)
-	}*/
-	
+	}
+
 	edit() {
 		Actions.push("spell-edit", {spell: this.state.spell});
 	}
+
+	upload() {
+
+	}
 }
+
 type SpellModel = {
 	name: string;
 	spellbookName: string;

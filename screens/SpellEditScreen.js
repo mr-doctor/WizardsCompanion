@@ -12,18 +12,38 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import { FormLabel, FormInput } from 'react-native-elements';
 var SpellEditScreen = /** @class */ (function (_super) {
     __extends(SpellEditScreen, _super);
     function SpellEditScreen(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
             spell: props.spell,
+            newName: props.spell.name,
+            newDiceType: props.spell.diceType,
+            newCastTime: props.spell.castTime,
+            newRange: props.spell.range,
+            newDice: props.spell.dice,
+            newEffectType: props.spell.effectType,
+            newDesc: props.spell.desc,
+            newExtraEffect: props.spell.extraEffect,
+            newDuration: props.spell.duration,
+            newDurationType: props.spell.durationType,
         };
         return _this;
     }
     SpellEditScreen.prototype.render = function () {
-        return (<View><Text>help</Text></View>);
+        var _this = this;
+        return (<View>
+			<FormLabel>Name</FormLabel>
+			<FormInput onChangeText={function (text) { return _this.setName(text); }}/>
+		</View>);
+    };
+    SpellEditScreen.prototype.setName = function (newName) {
+        this.setState({
+            newName: newName,
+        });
     };
     return SpellEditScreen;
 }(React.Component));
