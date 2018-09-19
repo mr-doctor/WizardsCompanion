@@ -1,5 +1,6 @@
 import * as React from "react";
 import {SpellModel} from "./SpellScreen";
+import {View, Text} from "react-native";
 
 type ScreenProps = {
 	spell: SpellModel;
@@ -21,7 +22,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	render() {
-		return {};
+		return (<View><Text>help</Text></View>);
 	}
 }
 

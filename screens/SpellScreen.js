@@ -14,7 +14,19 @@ var __extends = (this && this.__extends) || (function () {
 import { View } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
-import ActionButton from 'react-native-action-button';
+import { FloatingAction } from 'react-native-floating-action';
+var FabConfig = {
+    edit: {
+        text: "Edit",
+        name: "edit",
+        position: 1,
+    },
+    upload: {
+        text: "Upload",
+        name: "upload",
+        position: 2,
+    },
+};
 var SpellScreen = /** @class */ (function (_super) {
     __extends(SpellScreen, _super);
     function SpellScreen(props) {
@@ -28,6 +40,16 @@ var SpellScreen = /** @class */ (function (_super) {
         console.log("selected button: " + name);
     };
     SpellScreen.prototype.render = function () {
+        var _this = this;
+        var actions = [{
+                text: FabConfig.edit.text,
+                position: FabConfig.edit.position,
+                name: FabConfig.edit.name,
+            }, {
+                text: FabConfig.upload.text,
+                position: FabConfig.upload.position,
+                name: FabConfig.upload.name,
+            }];
         return ( /*<View style={{flex:1, backgroundColor: "#ffffff"}}>
             <Text style={styles.spellInformation}>
                 {this.state.spell.castTime}
@@ -54,15 +76,11 @@ var SpellScreen = /** @class */ (function (_super) {
                 <ActionButton.Item title={"Edit"} onPress={() => this.edit()}/>
             </ActionButton>
         </View>*/<View style={{ flex: 1, backgroundColor: '#f3f3f3' }}>
-				
-				<ActionButton buttonColor="rgba(231,76,60,1)">
-					<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={function () { return console.log("notes tapped!"); }}>
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={function () { }}>
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={function () { }}>
-					</ActionButton.Item>
-				</ActionButton>
+				<FloatingAction actions={actions} onPressItem={function (name) {
+            if (FabConfig.edit.name.localeCompare(name + "") == 0) {
+                _this.edit();
+            }
+        }}/>
 			</View>);
     };
     /*

@@ -3,7 +3,7 @@ import * as React from "react";
 import {SpellbookModel} from "./SpellbookScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
-import ActionButton from 'react-native-action-button';
+import { FloatingAction } from 'react-native-floating-action';
 
 type ScreenProps = {
 	spell: SpellModel;
@@ -12,6 +12,19 @@ type ScreenProps = {
 type StateType = {
 	spell: SpellModel;
 }
+
+const FabConfig = {
+	edit: {
+		text: "Edit",
+		name: "edit",
+		position: 1,
+	},
+	upload: {
+		text: "Upload",
+		name: "upload",
+		position: 2,
+	},
+};
 
 class SpellScreen extends React.Component<ScreenProps, StateType> {
 	
@@ -29,6 +42,16 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	render() {
+
+		const actions = [{
+			text: FabConfig.edit.text,
+			position: FabConfig.edit.position,
+			name: FabConfig.edit.name,
+		}, {
+			text: FabConfig.upload.text,
+			position: FabConfig.upload.position,
+			name: FabConfig.upload.name,
+		}];
 		
 		return (/*<View style={{flex:1, backgroundColor: "#ffffff"}}>
 			<Text style={styles.spellInformation}>
@@ -57,15 +80,14 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 			</ActionButton>
 		</View>*/
 			<View style={{flex:1, backgroundColor: '#f3f3f3'}}>
-				{/* Rest of the app comes ABOVE the action button component !*/}
-				<ActionButton buttonColor="rgba(231,76,60,1)">
-					<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
-					</ActionButton.Item>
-				</ActionButton>
+				<FloatingAction actions={actions}
+				onPressItem={
+					(name) => {
+						if (FabConfig.edit.name.localeCompare(name + "") == 0) {
+							this.edit();
+						}
+					}
+				}/>
 			</View>);
 	}
 	/*

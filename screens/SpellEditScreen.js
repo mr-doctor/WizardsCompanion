@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import * as React from "react";
+import { View, Text } from "react-native";
 var SpellEditScreen = /** @class */ (function (_super) {
     __extends(SpellEditScreen, _super);
     function SpellEditScreen(props) {
@@ -22,7 +23,7 @@ var SpellEditScreen = /** @class */ (function (_super) {
         return _this;
     }
     SpellEditScreen.prototype.render = function () {
-        return {};
+        return (<View><Text>help</Text></View>);
     };
     return SpellEditScreen;
 }(React.Component));
