@@ -99,7 +99,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	upload() {
-	
+		
 	}
 	
 	update(spell: SpellModel) {
