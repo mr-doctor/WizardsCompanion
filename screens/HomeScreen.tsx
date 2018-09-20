@@ -60,14 +60,10 @@ class HomeScreen extends React.Component<PropType, StateType> {
 			durationType: "Instantaneous",
 		};
 
-	/*	const spellbooks = this.state.spellbooks;
-		// spellbooks[book].spells.concat(spell);
-		const spellbook: SpellbookModel = spellbooks[book];
-		spellbook.spells.concat(spell);*/
-		dotProp.set(this.state.spellbooks[book], "spells.$end", spell);
+		this.setState({spellbooks: dotProp.set(this.state, `spellbooks.${book}.spells.$end`, spell)});
 
-		// this.setState({spellbooks: this.state.spellbooks[book].spells.concat([spell])});
 		console.log(this.state.spellbooks[0].spells);
+		console.log(spell);
 
 	}
 
