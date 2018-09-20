@@ -12,6 +12,7 @@
     "@types/react-navigation": "^2.0.20",
     "adb": "^0.2.0",
     "babel-preset-react-native": "2.1.0",
+    "dot-prop-immutable": "^1.4.0",
     "emulator": "^0.1.0",
     "fb-watchman": "^2.0.0",
     "react": "^16.4.1",

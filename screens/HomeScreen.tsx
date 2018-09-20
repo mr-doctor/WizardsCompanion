@@ -2,15 +2,13 @@ import {Button, View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import * as React from "react";
 import {Actions} from "react-native-router-flux";
 import {SpellbookModel, SpellbookScreen} from "./SpellbookScreen";
+import {SpellModel} from "./SpellScreen";
+var dotProp = require('dot-prop-immutable');
 
 type StateType = {
 	spellbooks: SpellbookModel[]
 }
-type PropType = {
-	spellbookModifier: () => {},
-	spellModifier: (book: number) => {},
-	spellbooks: SpellbookModel[],
-}
+type PropType = {}
 
 class HomeScreen extends React.Component<PropType, StateType> {
 
@@ -18,8 +16,59 @@ class HomeScreen extends React.Component<PropType, StateType> {
 		super(props);
 
 		this.state = {
-			spellbooks: this.props.spellbooks,
+			spellbooks: [],
 		}
+	}
+
+	addSpellbook() {
+		let index = 1;
+		for (let i = 0; i < this.state.spellbooks.length; i++) {
+			if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+				index++;
+			}
+		}
+		// Unique ID generation from https://gist.github.com/6174/6062387
+		let id: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+		this.setState({
+			spellbooks: this.state.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id})
+		});
+		console.log(this.state.spellbooks)
+	}
+
+	newSpell(book: number) {
+
+		let index = 1;
+		for (let i = 0; i < this.state.spellbooks[book].spells.length; i++) {
+			if (this.state.spellbooks[book].spells[i].name.localeCompare("Spell " + index) == 0) {
+				index++;
+			}
+		}
+		const spell: SpellModel = {
+			name: "Spell " + index,
+			spellbookName: this.state.spellbooks[book].name,
+			spellbookID: this.state.spellbooks[book].id,
+			// Unique ID generation from https://gist.github.com/6174/6062387
+			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+			diceType: "d8",
+			castTime: "Action",
+			range: "1",
+			dice: 1,
+			effectType: "Force",
+			desc: "Hits da ting mon",
+			extraEffect: 4,
+			duration: 6,
+			durationType: "Instantaneous",
+		};
+
+	/*	const spellbooks = this.state.spellbooks;
+		// spellbooks[book].spells.concat(spell);
+		const spellbook: SpellbookModel = spellbooks[book];
+		spellbook.spells.concat(spell);*/
+		dotProp.set(this.state.spellbooks[book], "spells.$end", spell);
+
+		// this.setState({spellbooks: this.state.spellbooks[book].spells.concat([spell])});
+		console.log(this.state.spellbooks[0].spells);
+
 	}
 
 	static navigationOptions = {
@@ -28,32 +77,25 @@ class HomeScreen extends React.Component<PropType, StateType> {
 
 	goToSpellbook(spellbook: SpellbookModel, index: number) {
 		console.log("pressed");
-		Actions.push("spellbook", {spellbook: spellbook, spellModifier: this.props.spellModifier, index: index, title: spellbook.name});
+		Actions.push("spellbook", {spellbook: spellbook, spellModifier: this.newSpell.bind(this), index: index, title: spellbook.name});
 	}
 
 	newSpellbook() {
-		// this.props.pageProvider.newSpellbook();
-		// console.log(this.props.pageProvider.state.spellbooks);
-		// this.setState({spellbooks: this.props.pageProvider.state.spellbooks})
 		let index = 1;
-		for (let i = 0; i < this.props.spellbooks.length; i++) {
-			if (this.props.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+		for (let i = 0; i < this.state.spellbooks.length; i++) {
+			if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
 				index++;
 			}
 		}
 		// Unique ID generation from https://gist.github.com/6174/6062387
 		let id: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-		// this.setState({
-			/*spellbooks: */this.props.spellbookModifier();
-		// });
-		// this.props.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id});
-		// console.log(this.props.spellbooks);
+		this.addSpellbook();
 	}
 
 	render() {
-		console.log(this.props.spellbooks);
+		console.log(this.state.spellbooks);
 		return (<View>
-				{this.props.spellbooks.map((spellbook, i) =>
+				{this.state.spellbooks.map((spellbook, i) =>
 					<TouchableOpacity
 						onPress={() => this.goToSpellbook(spellbook, i)}
 						style={styles.listItem}

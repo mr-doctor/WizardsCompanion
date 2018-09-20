@@ -26,69 +26,13 @@ var App = /** @class */ (function (_super) {
         };
         return _this;
     }
-    App.prototype.addSpellbook = function () {
-        var index = 1;
-        for (var i = 0; i < this.state.spellbooks.length; i++) {
-            if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
-                index++;
-            }
-        }
-        // Unique ID generation from https://gist.github.com/6174/6062387
-        var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        this.setState({
-            spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id })
-        });
-        console.log(this.state.spellbooks);
-    };
-    App.prototype.newSpell = function (book) {
-        var spellbook = this.state.spellbooks[book];
-        var index = 1;
-        for (var i = 0; i < spellbook.spells.length; i++) {
-            if (spellbook.spells[i].name.localeCompare("Spell " + index) == 0) {
-                index++;
-            }
-        }
-        /*const spell: SpellModel = {
-            name: "Spell " + index,
-            spellbookName: this.state.spellbook.name,
-            spellbookID: this.state.spellbook.id,
-            // Unique ID generation from https://gist.github.com/6174/6062387
-            spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-            diceType: "",
-            castTime: "",
-            range: "",
-            dice: 0,
-            effectType: "",
-            desc: "",
-            extraEffect: 0,
-            duration: 0,
-            durationType: "",
-        };*/
-        var spell = {
-            name: "Spell " + index,
-            spellbookName: spellbook.name,
-            spellbookID: spellbook.id,
-            // Unique ID generation from https://gist.github.com/6174/6062387
-            spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-            diceType: "d8",
-            castTime: "Action",
-            range: "1",
-            dice: 1,
-            effectType: "Force",
-            desc: "Hits da ting mon",
-            extraEffect: 4,
-            duration: 6,
-            durationType: "Instantaneous",
-        };
-        spellbook.spells.concat(spell);
-        var spellbooks = this.state.spellbooks;
-        spellbooks[book] = spellbook;
-        this.setState({ spellbooks: this.state.spellbooks });
-    };
+    // 	spellbookModifier={this.addSpellbook.bind(this)}
+    // spellbooks={this.state.spellbooks}
+    // spellModifier={this.newSpell.bind(this)}
     App.prototype.render = function () {
         return (<Router>
 				<Stack key="root">
-					<Scene key="home" component={HomeScreen} spellbookModifier={this.addSpellbook.bind(this)} spellbooks={this.state.spellbooks} title="Home Screen" spellModifier={this.newSpell.bind(this)}/>
+					<Scene key="home" component={HomeScreen} title="Home Screen"/>
 					<Scene key="spellbook" component={SpellbookScreen} title="Spellbook"/>
 					<Scene key="spell" component={SpellScreen} title="Spell"/>
 					<Scene key="spell-edit" component={SpellEditScreen} title={"Spell Edit"}/>

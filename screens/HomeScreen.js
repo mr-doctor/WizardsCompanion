@@ -14,42 +14,81 @@ var __extends = (this && this.__extends) || (function () {
 import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
+var dotProp = require('dot-prop-immutable');
 var HomeScreen = /** @class */ (function (_super) {
     __extends(HomeScreen, _super);
     function HomeScreen(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            spellbooks: _this.props.spellbooks,
+            spellbooks: [],
         };
         return _this;
     }
-    HomeScreen.prototype.goToSpellbook = function (spellbook, index) {
-        console.log("pressed");
-        Actions.push("spellbook", { spellbook: spellbook, spellModifier: this.props.spellModifier, index: index, title: spellbook.name });
-    };
-    HomeScreen.prototype.newSpellbook = function () {
-        // this.props.pageProvider.newSpellbook();
-        // console.log(this.props.pageProvider.state.spellbooks);
-        // this.setState({spellbooks: this.props.pageProvider.state.spellbooks})
+    HomeScreen.prototype.addSpellbook = function () {
         var index = 1;
-        for (var i = 0; i < this.props.spellbooks.length; i++) {
-            if (this.props.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+        for (var i = 0; i < this.state.spellbooks.length; i++) {
+            if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
                 index++;
             }
         }
         // Unique ID generation from https://gist.github.com/6174/6062387
         var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        // this.setState({
-        /*spellbooks: */ this.props.spellbookModifier();
-        // });
-        // this.props.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id});
-        // console.log(this.props.spellbooks);
+        this.setState({
+            spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id })
+        });
+        console.log(this.state.spellbooks);
+    };
+    HomeScreen.prototype.newSpell = function (book) {
+        var index = 1;
+        for (var i = 0; i < this.state.spellbooks[book].spells.length; i++) {
+            if (this.state.spellbooks[book].spells[i].name.localeCompare("Spell " + index) == 0) {
+                index++;
+            }
+        }
+        var spell = {
+            name: "Spell " + index,
+            spellbookName: this.state.spellbooks[book].name,
+            spellbookID: this.state.spellbooks[book].id,
+            // Unique ID generation from https://gist.github.com/6174/6062387
+            spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+            diceType: "d8",
+            castTime: "Action",
+            range: "1",
+            dice: 1,
+            effectType: "Force",
+            desc: "Hits da ting mon",
+            extraEffect: 4,
+            duration: 6,
+            durationType: "Instantaneous",
+        };
+        /*	const spellbooks = this.state.spellbooks;
+            // spellbooks[book].spells.concat(spell);
+            const spellbook: SpellbookModel = spellbooks[book];
+            spellbook.spells.concat(spell);*/
+        dotProp.set(this.state.spellbooks[book], "spells.$end", spell);
+        // this.setState({spellbooks: this.state.spellbooks[book].spells.concat([spell])});
+        console.log(this.state.spellbooks[0].spells);
+    };
+    HomeScreen.prototype.goToSpellbook = function (spellbook, index) {
+        console.log("pressed");
+        Actions.push("spellbook", { spellbook: spellbook, spellModifier: this.newSpell.bind(this), index: index, title: spellbook.name });
+    };
+    HomeScreen.prototype.newSpellbook = function () {
+        var index = 1;
+        for (var i = 0; i < this.state.spellbooks.length; i++) {
+            if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+                index++;
+            }
+        }
+        // Unique ID generation from https://gist.github.com/6174/6062387
+        var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        this.addSpellbook();
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
-        console.log(this.props.spellbooks);
+        console.log(this.state.spellbooks);
         return (<View>
-				{this.props.spellbooks.map(function (spellbook, i) {
+				{this.state.spellbooks.map(function (spellbook, i) {
             return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook, i); }} style={styles.listItem} key={i}>
 						<Text>{spellbook.name}</Text>
 					</TouchableOpacity>;
