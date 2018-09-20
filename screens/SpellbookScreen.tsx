@@ -9,10 +9,8 @@ var dotProp = require('dot-prop-immutable');
 
 type ScreenProps = {
 	spellbook: SpellbookModel;
-	spellAdder: (book: number) => {}
-	spellEditor: (spell: SpellModel, index: number, book: number) => {};
-	index: number;
-	book: number;
+	index: number,
+	update: (index: number, spellbook: SpellbookModel) => {}
 }
 
 type StateType = {
@@ -29,14 +27,56 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 		}
 	}
 	
+	update(spell: SpellModel, index: number) {
+		console.log(index);
+		this.setState(dotProp.set(this.state,`spellbook.spells.${index}`, spell), ()=>{
+			this.props.update(this.props.index, this.state.spellbook);
+		})
+	}
+	
 	jumpToSpell(spell: SpellModel, index: number) {
-		Actions.push("spell", {spell: spell, title: spell.name, index: index, book: this.props.book, spellEditor: this.props.spellEditor})
+		Actions.push("spell", {spell: spell, title: spell.name, update: this.update.bind(this), index})
+	}
+	
+	newSpell() {
+		let index = 1;
+		for (let i = 0; i < this.state.spellbook.spells.length; i++) {
+			if (this.state.spellbook.spells[i].name.localeCompare("Spell " + index) == 0) {
+				index++;
+			}
+		}
+		const spell: SpellModel = {
+			name: "Spell " + index,
+			spellbookName: this.state.spellbook.name,
+			spellbookID: this.state.spellbook.id,
+			// Unique ID generation from https://gist.github.com/6174/6062387
+			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+			diceType: "d8",
+			castTime: "Action",
+			range: "1",
+			dice: 1,
+			effectType: "Force",
+			desc: "Hits da ting mon",
+			extraEffect: 4,
+			duration: 6,
+			durationType: "Instantaneous",
+		};
+		
+		this.setState({
+			spellbook: {
+				spells: this.state.spellbook.spells.concat(spell),
+				name: this.state.spellbook.name,
+				id: this.state.spellbook.id,
+			}
+		},()=>{
+			this.props.update(this.props.index, this.state.spellbook)
+		})
 	}
 
 	render() {
 		return (<View>
 				{
-					this.props.spellbook.spells.map((spell, i) => <TouchableOpacity
+					this.state.spellbook.spells.map((spell, i) => <TouchableOpacity
 						onPress={() => this.jumpToSpell(spell, i)}
 						style={styles.listItem}
 						key={i}
@@ -49,7 +89,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 				{/*<TouchableOpacity onPress={() => this.newSpell()}><View>
 					<Text>+</Text>
 				</View></TouchableOpacity>*/}
-				<Button title={"+"} onPress={() => this.props.spellAdder(this.props.index)}/>
+				<Button title={"+"} onPress={() => this.newSpell()}/>
 			</View>
 		)
 	}

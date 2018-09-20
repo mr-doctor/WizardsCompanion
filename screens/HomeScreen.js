@@ -24,7 +24,10 @@ var HomeScreen = /** @class */ (function (_super) {
         };
         return _this;
     }
-    HomeScreen.prototype.addSpellbook = function () {
+    HomeScreen.prototype.goToSpellbook = function (spellbook, index) {
+        Actions.push("spellbook", { spellbook: spellbook, title: spellbook.name, index: index, update: this.updateSpellbook.bind(this) });
+    };
+    HomeScreen.prototype.newSpellbook = function () {
         var index = 1;
         for (var i = 0; i < this.state.spellbooks.length; i++) {
             if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
@@ -33,61 +36,10 @@ var HomeScreen = /** @class */ (function (_super) {
         }
         // Unique ID generation from https://gist.github.com/6174/6062387
         var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        this.setState({
-            spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id })
-        });
-        console.log(this.state.spellbooks);
+        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id }) });
     };
-    HomeScreen.prototype.newSpell = function (book) {
-        var _this = this;
-        var index = 1;
-        for (var i = 0; i < this.state.spellbooks[book].spells.length; i++) {
-            if (this.state.spellbooks[book].spells[i].name.localeCompare("Spell " + index) == 0) {
-                index++;
-            }
-        }
-        var spell = {
-            name: "Spell " + index,
-            spellbookName: this.state.spellbooks[book].name,
-            spellbookID: this.state.spellbooks[book].id,
-            spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-            diceType: "d8",
-            castTime: "Action",
-            range: "1",
-            dice: 1,
-            effectType: "Force",
-            desc: "Hits da ting mon",
-            extraEffect: 4,
-            duration: 6,
-            durationType: "Instantaneous",
-        };
-        var spells = dotProp.get(this.state, "spellbooks." + book + ".spells");
-        this.setState(dotProp.set(this.state, "spellbooks." + book + ".spells", spells.concat(spell)), function () {
-            Actions.refresh({ spellbook: _this.state.spellbooks[book], spellAdder: _this.newSpell.bind(_this), index: book, title: _this.state.spellbooks[book].name });
-        });
-    };
-    HomeScreen.prototype.spellEditor = function (spell, index, book) {
-        var _this = this;
-        console.log("spell index " + index + ", spellbook index " + book);
-        this.setState(dotProp.set(this.state, "spellbooks." + book + ".spells." + index, spell), function () {
-            Actions.refresh({ spell: _this.state.spellbooks[book].spells[index], book: book, index: index, spellEditor: _this.spellEditor.bind(_this) });
-        });
-        /*let spellbooks = this.state.spellbooks;
-    spellbooks[book].spells[index] = spell;
-    
-    this.setState({spellbooks: spellbooks});
-    Actions.refresh({spell: this.state.spellbooks[book].spells[index], book: book, index: index, spellEditor: this.spellEditor.bind(this)});*/
-        console.log(spell);
-    };
-    HomeScreen.prototype.goToSpellbook = function (spellbook, index) {
-        console.log("pressed");
-        Actions.push("spellbook", { spellbook: spellbook, spellAdder: this.newSpell.bind(this), book: index, spellEditor: this.spellEditor.bind(this), index: index, title: spellbook.name });
-    };
-    /*editSpell(spell: SpellModel, index: number) {
-    
-    }*/
-    HomeScreen.prototype.newSpellbook = function () {
-        this.addSpellbook();
+    HomeScreen.prototype.updateSpellbook = function (index, spellbook) {
+        this.setState(dotProp.set(this.state, "spellbooks." + index, spellbook));
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
@@ -114,6 +66,11 @@ export var styles = StyleSheet.create({
     spellInformation: {
         margin: 15,
         fontSize: 20
+    },
+    spellDescription: {
+        margin: 15,
+        fontSize: 18,
+        textAlign: "justify",
     },
     dropdown: {
         width: "90%",

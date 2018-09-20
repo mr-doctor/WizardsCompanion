@@ -54,7 +54,7 @@ var SpellEditScreen = /** @class */ (function (_super) {
             durationType: this.state.newDurationType,
         };
         this.setState({ spell: newSpell });
-        this.props.changeSpell(newSpell, this.props.index, this.props.book);
+        this.props.update(newSpell);
         Actions.pop();
     };
     SpellEditScreen.prototype.render = function () {

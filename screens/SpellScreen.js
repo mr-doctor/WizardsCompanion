@@ -48,7 +48,9 @@ var SpellScreen = /** @class */ (function (_super) {
             "".localeCompare(this.state.spell.range) == 0) ? "" : " metres")}
 			</Text>
 			<Text style={styles.spellInformation}>
-				{((this.state.spell.duration > 0) ? this.state.spell.duration + " " : "") + this.state.spell.durationType}
+				{((this.state.spell.duration > 0 &&
+            this.state.spell.durationType.localeCompare("Instantaneous") != 0) ?
+            this.state.spell.duration + " " : "") + this.state.spell.durationType}
 			</Text>
 			<Text style={styles.spellInformation}>
 				{((this.state.spell.dice > 0) ? this.state.spell.dice : "") +
@@ -57,7 +59,7 @@ var SpellScreen = /** @class */ (function (_super) {
             this.state.spell.effectType + " " +
             (("Healing".localeCompare(this.state.spell.effectType) == 0 || "".localeCompare(this.state.spell.effectType) == 0) ? "" : "Damage")}
 			</Text>
-			<Text style={styles.spellInformation}>
+			<Text style={styles.spellDescription}>
 				{this.state.spell.desc}
 			</Text>
 
@@ -84,13 +86,14 @@ var SpellScreen = /** @class */ (function (_super) {
             }
         }}/>);
     };
-    /*changeSpell(newSpell: SpellModel) {
-        this.setState({spell: newSpell});
-    }*/
     SpellScreen.prototype.edit = function () {
-        Actions.push("spell-edit", { spell: this.state.spell, index: this.props.index, book: this.props.book, changeSpell: this.props.spellEditor });
+        Actions.push("spell-edit", { spell: this.state.spell, update: this.update.bind(this) });
     };
     SpellScreen.prototype.upload = function () {
+    };
+    SpellScreen.prototype.update = function (spell) {
+        this.setState({ spell: spell });
+        this.props.update(spell, this.props.index);
     };
     return SpellScreen;
 }(React.Component));

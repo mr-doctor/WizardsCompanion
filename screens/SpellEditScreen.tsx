@@ -9,9 +9,7 @@ import {Actions} from "react-native-router-flux";
 
 type ScreenProps = {
 	spell: SpellModel
-	index: number;
-	changeSpell: (newSpell: SpellModel, index: number, book: number) => {},
-	book: number,
+	update: (model: SpellModel) => {}
 }
 
 type StateType = {
@@ -66,9 +64,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 			durationType: this.state.newDurationType,
 		};
 		this.setState({spell: newSpell});
-		
-		this.props.changeSpell(newSpell, this.props.index, this.props.book);
-		
+		this.props.update(newSpell);
 		Actions.pop();
 	}
 

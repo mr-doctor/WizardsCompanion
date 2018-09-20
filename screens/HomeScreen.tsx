@@ -11,93 +11,40 @@ type StateType = {
 type PropType = {}
 
 class HomeScreen extends React.Component<PropType, StateType> {
-
+	
 	constructor(props: any) {
 		super(props);
-
+		
 		this.state = {
 			spellbooks: [],
 		}
 	}
-
-	addSpellbook() {
+	
+	static navigationOptions = {
+		title: "Wizard's Companion",
+	};
+	
+	goToSpellbook(spellbook: SpellbookModel, index: number) {
+		Actions.push("spellbook", {spellbook: spellbook, title: spellbook.name, index: index, update: this.updateSpellbook.bind(this)});
+	}
+	
+	newSpellbook() {
 		let index = 1;
 		for (let i = 0; i < this.state.spellbooks.length; i++) {
 			if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
 				index++;
 			}
 		}
+		
 		// Unique ID generation from https://gist.github.com/6174/6062387
 		let id: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-		this.setState({
-			spellbooks: this.state.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id})
-		});
-		console.log(this.state.spellbooks)
-	}
-
-	newSpell(book: number) {
-
-		let index = 1;
-		for (let i = 0; i < this.state.spellbooks[book].spells.length; i++) {
-			if (this.state.spellbooks[book].spells[i].name.localeCompare("Spell " + index) == 0) {
-				index++;
-			}
-		}
-		const spell: SpellModel = {
-			name: "Spell " + index,
-			spellbookName: this.state.spellbooks[book].name,
-			spellbookID: this.state.spellbooks[book].id,
-			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-			diceType: "d8",
-			castTime: "Action",
-			range: "1",
-			dice: 1,
-			effectType: "Force",
-			desc: "Hits da ting mon",
-			extraEffect: 4,
-			duration: 6,
-			durationType: "Instantaneous",
-		};
-		
-		let spells = dotProp.get(this.state,`spellbooks.${book}.spells`);
-		this.setState(dotProp.set(this.state, `spellbooks.${book}.spells`, spells.concat(spell)),()=>{
-			Actions.refresh({spellbook: this.state.spellbooks[book], spellAdder: this.newSpell.bind(this), index: book, title: this.state.spellbooks[book].name});
-		});
+		this.setState({spellbooks: this.state.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id})});
 	}
 	
-	spellEditor(spell: SpellModel, index: number, book: number) {
-		console.log("spell index " + index + ", spellbook index " + book);
-		
-		this.setState(dotProp.set(this.state, `spellbooks.${book}.spells.${index}`, spell),() => {
-			Actions.refresh({spell: this.state.spellbooks[book].spells[index], book: book, index: index, spellEditor: this.spellEditor.bind(this)});
-		});
-		
-		/*let spellbooks = this.state.spellbooks;
-	spellbooks[book].spells[index] = spell;
-	
-	this.setState({spellbooks: spellbooks});
-	Actions.refresh({spell: this.state.spellbooks[book].spells[index], book: book, index: index, spellEditor: this.spellEditor.bind(this)});*/
-		
-		console.log(spell);
+	updateSpellbook(index: number, spellbook: SpellbookModel) {
+		this.setState(dotProp.set(this.state, `spellbooks.${index}`, spellbook));
 	}
 	
-	static navigationOptions = {
-		title: "Wizard's Companion",
-	};
-
-	goToSpellbook(spellbook: SpellbookModel, index: number) {
-		console.log("pressed");
-		Actions.push("spellbook", {spellbook: spellbook, spellAdder: this.newSpell.bind(this), book: index, spellEditor: this.spellEditor.bind(this), index: index, title: spellbook.name});
-	}
-	
-	/*editSpell(spell: SpellModel, index: number) {
-	
-	}*/
-
-	newSpellbook() {
-		this.addSpellbook();
-	}
-
 	render() {
 		return (<View>
 				{this.state.spellbooks.map((spellbook, i) =>
@@ -126,6 +73,12 @@ export const styles = StyleSheet.create({
 	spellInformation: {
 		margin: 15,
 		fontSize: 20
+	},
+	
+	spellDescription: {
+		margin: 15,
+		fontSize: 18,
+		textAlign: "justify",
 	},
 
 	dropdown: {

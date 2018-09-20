@@ -26,19 +26,60 @@ var SpellbookScreen = /** @class */ (function (_super) {
         };
         return _this;
     }
+    SpellbookScreen.prototype.update = function (spell, index) {
+        var _this = this;
+        console.log(index);
+        this.setState(dotProp.set(this.state, "spellbook.spells." + index, spell), function () {
+            _this.props.update(_this.props.index, _this.state.spellbook);
+        });
+    };
     SpellbookScreen.prototype.jumpToSpell = function (spell, index) {
-        Actions.push("spell", { spell: spell, title: spell.name, index: index, book: this.props.book, spellEditor: this.props.spellEditor });
+        Actions.push("spell", { spell: spell, title: spell.name, update: this.update.bind(this), index: index });
+    };
+    SpellbookScreen.prototype.newSpell = function () {
+        var _this = this;
+        var index = 1;
+        for (var i = 0; i < this.state.spellbook.spells.length; i++) {
+            if (this.state.spellbook.spells[i].name.localeCompare("Spell " + index) == 0) {
+                index++;
+            }
+        }
+        var spell = {
+            name: "Spell " + index,
+            spellbookName: this.state.spellbook.name,
+            spellbookID: this.state.spellbook.id,
+            // Unique ID generation from https://gist.github.com/6174/6062387
+            spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+            diceType: "d8",
+            castTime: "Action",
+            range: "1",
+            dice: 1,
+            effectType: "Force",
+            desc: "Hits da ting mon",
+            extraEffect: 4,
+            duration: 6,
+            durationType: "Instantaneous",
+        };
+        this.setState({
+            spellbook: {
+                spells: this.state.spellbook.spells.concat(spell),
+                name: this.state.spellbook.name,
+                id: this.state.spellbook.id,
+            }
+        }, function () {
+            _this.props.update(_this.props.index, _this.state.spellbook);
+        });
     };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.props.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
+				{this.state.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
 						<Text>
 							{spell.name}
 						</Text>
 					</TouchableOpacity>; })}
 				
-				<Button title={"+"} onPress={function () { return _this.props.spellAdder(_this.props.index); }}/>
+				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
 			</View>);
     };
     return SpellbookScreen;

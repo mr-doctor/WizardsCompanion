@@ -7,9 +7,8 @@ import {FloatingAction} from 'react-native-floating-action';
 
 type ScreenProps = {
 	spell: SpellModel;
-	spellEditor: (spell: SpellModel, index: number, book: number) => {};
 	index: number;
-	book: number;
+	update: (spell: SpellModel, index: number) => {}
 }
 
 type StateType = {
@@ -53,7 +52,9 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 					"".localeCompare(this.state.spell.range) == 0) ? "" : " metres")}
 			</Text>
 			<Text style={styles.spellInformation}>
-				{((this.state.spell.duration > 0) ? this.state.spell.duration + " " : "") + this.state.spell.durationType}
+				{((this.state.spell.duration > 0 &&
+					this.state.spell.durationType.localeCompare("Instantaneous") != 0) ?
+					this.state.spell.duration + " " : "") + this.state.spell.durationType}
 			</Text>
 			<Text style={styles.spellInformation}>
 				{((this.state.spell.dice > 0) ? this.state.spell.dice : "") +
@@ -62,7 +63,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 				this.state.spell.effectType + " " +
 				(("Healing".localeCompare(this.state.spell.effectType) == 0 || "".localeCompare(this.state.spell.effectType) == 0) ? "" : "Damage")}
 			</Text>
-			<Text style={styles.spellInformation}>
+			<Text style={styles.spellDescription}>
 				{this.state.spell.desc}
 			</Text>
 
@@ -93,16 +94,17 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 		)
 	}
 	
-	/*changeSpell(newSpell: SpellModel) {
-		this.setState({spell: newSpell});
-	}*/
-
 	edit() {
-		Actions.push("spell-edit", {spell: this.state.spell, index: this.props.index, book: this.props.book, changeSpell: this.props.spellEditor});
+		Actions.push("spell-edit", {spell: this.state.spell, update: this.update.bind(this)});
 	}
-
+	
 	upload() {
-
+	
+	}
+	
+	update(spell: SpellModel) {
+		this.setState({spell});
+		this.props.update(spell, this.props.index);
 	}
 }
 
