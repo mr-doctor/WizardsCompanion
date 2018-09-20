@@ -19,7 +19,7 @@ var HomeScreen = /** @class */ (function (_super) {
     function HomeScreen(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            spellbooks: [],
+            spellbooks: _this.props.spellbooks,
         };
         return _this;
     }
@@ -28,20 +28,28 @@ var HomeScreen = /** @class */ (function (_super) {
         Actions.push("spellbook", { spellbook: spellbook, title: spellbook.name });
     };
     HomeScreen.prototype.newSpellbook = function () {
+        // this.props.pageProvider.newSpellbook();
+        // console.log(this.props.pageProvider.state.spellbooks);
+        // this.setState({spellbooks: this.props.pageProvider.state.spellbooks})
         var index = 1;
-        for (var i = 0; i < this.state.spellbooks.length; i++) {
-            if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+        for (var i = 0; i < this.props.spellbooks.length; i++) {
+            if (this.props.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
                 index++;
             }
         }
         // Unique ID generation from https://gist.github.com/6174/6062387
         var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        this.setState({ spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id }) });
+        // this.setState({
+        /*spellbooks: */ this.props.modifier();
+        // });
+        // this.props.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id});
+        // console.log(this.props.spellbooks);
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
+        console.log(this.state.spellbooks);
         return (<View>
-				{this.state.spellbooks.map(function (spellbook, i) {
+				{this.props.spellbooks.map(function (spellbook, i) {
             return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook); }} style={styles.listItem} key={i}>
 						<Text>{spellbook.name}</Text>
 					</TouchableOpacity>;
@@ -72,7 +80,7 @@ export var styles = StyleSheet.create({
         borderRadius: 0,
         borderWidth: 0.5,
         borderColor: '#d6d7da',
-        backgroundColor: "#878787",
+        backgroundColor: "#d6d6d6",
         width: "90%",
         height: 40,
         alignItems: "center",

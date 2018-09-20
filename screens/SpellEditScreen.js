@@ -16,6 +16,8 @@ import { View, ScrollView } from "react-native";
 import { FormLabel, FormInput } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 import { styles } from "./HomeScreen";
+import { FloatingAction } from "react-native-floating-action";
+import { Actions } from "react-native-router-flux";
 var castTimes = [
     { value: "Action" },
     { value: "Reaction" },
@@ -73,19 +75,26 @@ var SpellEditScreen = /** @class */ (function (_super) {
     }
     SpellEditScreen.prototype.render = function () {
         var _this = this;
-        return (<ScrollView>
-			<FormLabel>Name</FormLabel>
-			<FormInput defaultValue={this.state.spell.name} onChangeText={function (text) { return _this.setName(text); }}/>
-			<Dropdown containerStyle={styles.dropdown} label="Cast Time" data={castTimes} defaultValue={this.state.spell.castTime} onChangeText={function (value) { _this.setCastTime(value); }}/>
-			<Dropdown containerStyle={styles.dropdown} label="Duration Type" data={durations} defaultValue={this.state.spell.durationType} onChangeText={function (value) { _this.setDurationType(value); }}/>
-			{this.renderDuration()}
-			{this.renderRange()}
-			{this.renderDice()}
-			{this.renderExtraEffect()}
-			{this.renderEffectType()}
-			<FormLabel>Description</FormLabel>
-			<FormInput defaultValue={this.state.spell.desc} onChangeText={function (text) { return _this.setDesc(text); }}/>
-		</ScrollView>);
+        return (<View>
+			<ScrollView>
+				<FormLabel>Name</FormLabel>
+				<FormInput defaultValue={this.state.spell.name} onChangeText={function (text) { return _this.setName(text); }}/>
+				<Dropdown containerStyle={styles.dropdown} label="Cast Time" data={castTimes} defaultValue={this.state.spell.castTime} onChangeText={function (value) {
+            _this.setCastTime(value);
+        }}/>
+				<Dropdown containerStyle={styles.dropdown} label="Duration Type" data={durations} defaultValue={this.state.spell.durationType} onChangeText={function (value) {
+            _this.setDurationType(value);
+        }}/>
+				{this.renderDuration()}
+				{this.renderRange()}
+				{this.renderDice()}
+				{this.renderExtraEffect()}
+				{this.renderEffectType()}
+				<FormLabel>Description</FormLabel>
+				<FormInput defaultValue={this.state.spell.desc} onChangeText={function (text) { return _this.setDesc(text); }}/>
+			</ScrollView>
+			<FloatingAction onPressMain={function () { return _this.save(); }}/>
+		</View>);
     };
     SpellEditScreen.prototype.renderDuration = function () {
         var _this = this;
@@ -186,6 +195,27 @@ var SpellEditScreen = /** @class */ (function (_super) {
         this.setState({
             newDesc: text,
         });
+    };
+    SpellEditScreen.prototype.save = function () {
+        var newSpell = {
+            name: this.state.newName,
+            spellbookName: this.state.spell.spellbookName,
+            spellbookID: this.state.spell.spellbookID,
+            spellID: this.state.spell.spellID,
+            diceType: this.state.newDiceType,
+            castTime: this.state.newCastTime,
+            range: this.state.newRange,
+            dice: this.state.newDice,
+            effectType: this.state.newEffectType,
+            desc: this.state.newDesc,
+            extraEffect: this.state.newExtraEffect,
+            duration: this.state.newDuration,
+            durationType: this.state.newDurationType,
+        };
+        this.setState({ spell: newSpell });
+        // Actions.pop();
+        Actions.replace("spell", { spell: newSpell, name: newSpell.name });
+        // Actions.push("spell", {spell: newSpell, title: newSpell})
     };
     return SpellEditScreen;
 }(React.Component));

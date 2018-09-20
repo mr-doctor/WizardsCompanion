@@ -2,11 +2,15 @@ import {Button, View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import * as React from "react";
 import {Actions} from "react-native-router-flux";
 import {SpellbookModel, SpellbookScreen} from "./SpellbookScreen";
+import {PageProvider} from "../providers/Page";
 
 type StateType = {
-	spellbooks: SpellbookModel[]
+	spellbooks: () => {}
 }
-type PropType = {}
+type PropType = {
+	modifier: () => {},
+	spellbooks: () => {},
+}
 
 class HomeScreen extends React.Component<PropType, StateType> {
 
@@ -14,7 +18,7 @@ class HomeScreen extends React.Component<PropType, StateType> {
 		super(props);
 
 		this.state = {
-			spellbooks: [],
+			spellbooks: this.props.spellbooks,
 		}
 	}
 
@@ -28,21 +32,28 @@ class HomeScreen extends React.Component<PropType, StateType> {
 	}
 
 	newSpellbook() {
+		// this.props.pageProvider.newSpellbook();
+		// console.log(this.props.pageProvider.state.spellbooks);
+		// this.setState({spellbooks: this.props.pageProvider.state.spellbooks})
 		let index = 1;
-		for (let i = 0; i < this.state.spellbooks.length; i++) {
-			if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+		for (let i = 0; i < this.props.spellbooks.length; i++) {
+			if (this.props.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
 				index++;
 			}
 		}
-
 		// Unique ID generation from https://gist.github.com/6174/6062387
 		let id: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-		this.setState({spellbooks: this.state.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id})});
+		// this.setState({
+			/*spellbooks: */this.props.modifier();
+		// });
+		// this.props.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id});
+		// console.log(this.props.spellbooks);
 	}
 
 	render() {
+		console.log(this.state.spellbooks);
 		return (<View>
-				{this.state.spellbooks.map((spellbook, i) =>
+				{this.props.spellbooks.map((spellbook, i) =>
 					<TouchableOpacity
 						onPress={() => this.goToSpellbook(spellbook)}
 						style={styles.listItem}
@@ -80,7 +91,7 @@ export const styles = StyleSheet.create({
 		borderWidth: 0.5,
 		borderColor: '#d6d7da',
 
-		backgroundColor: "#878787",
+		backgroundColor: "#d6d6d6",
 		width: "90%",
 		height: 40,
 		alignItems: "center",
