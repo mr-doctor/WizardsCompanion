@@ -19,27 +19,31 @@ import { SpellScreen } from "./screens/SpellScreen";
 import { SpellEditScreen } from "./screens/SpellEditScreen";
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
-    function App() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.spellbooks = [];
+    function App(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            spellbooks: []
+        };
         return _this;
     }
     App.prototype.addSpellbook = function () {
         var index = 1;
-        for (var i = 0; i < this.spellbooks.length; i++) {
-            if (this.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
+        for (var i = 0; i < this.state.spellbooks.length; i++) {
+            if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
                 index++;
             }
         }
         // Unique ID generation from https://gist.github.com/6174/6062387
         var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        this.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id });
-        console.log(this.spellbooks);
+        this.setState({
+            spellbooks: this.state.spellbooks.concat({ spells: [], name: "Spellbook " + index, id: id })
+        });
+        console.log(this.state.spellbooks);
     };
     App.prototype.render = function () {
         return (<Router>
 				<Stack key="root">
-					<Scene key="home" component={HomeScreen} modifier={this.addSpellbook()} title="Home Screen"/>
+					<Scene key="home" component={HomeScreen} modifier={this.addSpellbook.bind(this)} spellbooks={this.state.spellbooks} title="Home Screen"/>
 					<Scene key="spellbook" component={SpellbookScreen} title="Spellbook"/>
 					<Scene key="spell" component={SpellScreen} title="Spell"/>
 					<Scene key="spell-edit" component={SpellEditScreen} title={"Spell Edit"}/>

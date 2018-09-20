@@ -5,11 +5,11 @@ import {SpellbookModel, SpellbookScreen} from "./SpellbookScreen";
 import {PageProvider} from "../providers/Page";
 
 type StateType = {
-	spellbooks: () => {}
+	spellbooks: SpellbookModel[]
 }
 type PropType = {
 	modifier: () => {},
-	spellbooks: () => {},
+	spellbooks: SpellbookModel[],
 }
 
 class HomeScreen extends React.Component<PropType, StateType> {
