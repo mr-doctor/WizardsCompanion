@@ -47,7 +47,6 @@ class HomeScreen extends React.Component<PropType, StateType> {
 			name: "Spell " + index,
 			spellbookName: this.state.spellbooks[book].name,
 			spellbookID: this.state.spellbooks[book].id,
-			// Unique ID generation from https://gist.github.com/6174/6062387
 			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
 			diceType: "d8",
 			castTime: "Action",
@@ -59,37 +58,47 @@ class HomeScreen extends React.Component<PropType, StateType> {
 			duration: 6,
 			durationType: "Instantaneous",
 		};
-
-		this.setState({spellbooks: dotProp.set(this.state, `spellbooks.${book}.spells.$end`, spell)});
-
-		console.log(this.state.spellbooks[0].spells);
-		console.log(spell);
-
+		
+		let spells = dotProp.get(this.state,`spellbooks.${book}.spells`);
+		this.setState(dotProp.set(this.state, `spellbooks.${book}.spells`, spells.concat(spell)),()=>{
+			Actions.refresh({spellbook: this.state.spellbooks[book], spellAdder: this.newSpell.bind(this), index: book, title: this.state.spellbooks[book].name});
+		});
 	}
-
+	
+	spellEditor(spell: SpellModel, index: number, book: number) {
+		console.log("spell index " + index + ", spellbook index " + book);
+		
+		this.setState(dotProp.set(this.state, `spellbooks.${book}.spells.${index}`, spell),() => {
+			Actions.refresh({spell: this.state.spellbooks[book].spells[index], book: book, index: index, spellEditor: this.spellEditor.bind(this)});
+		});
+		
+		/*let spellbooks = this.state.spellbooks;
+	spellbooks[book].spells[index] = spell;
+	
+	this.setState({spellbooks: spellbooks});
+	Actions.refresh({spell: this.state.spellbooks[book].spells[index], book: book, index: index, spellEditor: this.spellEditor.bind(this)});*/
+		
+		console.log(spell);
+	}
+	
 	static navigationOptions = {
 		title: "Wizard's Companion",
 	};
 
 	goToSpellbook(spellbook: SpellbookModel, index: number) {
 		console.log("pressed");
-		Actions.push("spellbook", {spellbook: spellbook, spellModifier: this.newSpell.bind(this), index: index, title: spellbook.name});
+		Actions.push("spellbook", {spellbook: spellbook, spellAdder: this.newSpell.bind(this), book: index, spellEditor: this.spellEditor.bind(this), index: index, title: spellbook.name});
 	}
+	
+	/*editSpell(spell: SpellModel, index: number) {
+	
+	}*/
 
 	newSpellbook() {
-		let index = 1;
-		for (let i = 0; i < this.state.spellbooks.length; i++) {
-			if (this.state.spellbooks[i].name.localeCompare("Spellbook " + index) == 0) {
-				index++;
-			}
-		}
-		// Unique ID generation from https://gist.github.com/6174/6062387
-		let id: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 		this.addSpellbook();
 	}
 
 	render() {
-		console.log(this.state.spellbooks);
 		return (<View>
 				{this.state.spellbooks.map((spellbook, i) =>
 					<TouchableOpacity

@@ -24,7 +24,7 @@ class App extends React.Component<{}, StateType> {
 
 // 	spellbookModifier={this.addSpellbook.bind(this)}
 // spellbooks={this.state.spellbooks}
-// spellModifier={this.newSpell.bind(this)}
+// spellAdder={this.newSpell.bind(this)}
 
 	render() {
 		return (

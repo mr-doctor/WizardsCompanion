@@ -7,6 +7,9 @@ import {FloatingAction} from 'react-native-floating-action';
 
 type ScreenProps = {
 	spell: SpellModel;
+	spellEditor: (spell: SpellModel, index: number, book: number) => {};
+	index: number;
+	book: number;
 }
 
 type StateType = {
@@ -89,9 +92,13 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 			}/>
 		)
 	}
+	
+	/*changeSpell(newSpell: SpellModel) {
+		this.setState({spell: newSpell});
+	}*/
 
 	edit() {
-		Actions.push("spell-edit", {spell: this.state.spell});
+		Actions.push("spell-edit", {spell: this.state.spell, index: this.props.index, book: this.props.book, changeSpell: this.props.spellEditor});
 	}
 
 	upload() {

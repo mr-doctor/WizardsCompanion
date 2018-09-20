@@ -15,6 +15,8 @@ import { Button, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
+// import {Icon} from "../node_modules/@types/react-native-vector-icons/Icon";
+var dotProp = require('dot-prop-immutable');
 var SpellbookScreen = /** @class */ (function (_super) {
     __extends(SpellbookScreen, _super);
     function SpellbookScreen(props) {
@@ -24,19 +26,19 @@ var SpellbookScreen = /** @class */ (function (_super) {
         };
         return _this;
     }
-    SpellbookScreen.prototype.jumpToSpell = function (spell) {
-        Actions.push("spell", { spell: spell, title: spell.name });
+    SpellbookScreen.prototype.jumpToSpell = function (spell, index) {
+        Actions.push("spell", { spell: spell, title: spell.name, index: index, book: this.props.book, spellEditor: this.props.spellEditor });
     };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View>
-				{this.props.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell); }} style={styles.listItem} key={i}>
+				{this.props.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
 						<Text>
 							{spell.name}
 						</Text>
 					</TouchableOpacity>; })}
 				
-				<Button title={"+"} onPress={function () { return _this.props.spellModifier(_this.props.index); }}/>
+				<Button title={"+"} onPress={function () { return _this.props.spellAdder(_this.props.index); }}/>
 			</View>);
     };
     return SpellbookScreen;

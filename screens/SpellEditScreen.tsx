@@ -8,7 +8,10 @@ import {FloatingAction} from "react-native-floating-action";
 import {Actions} from "react-native-router-flux";
 
 type ScreenProps = {
-	spell: SpellModel;
+	spell: SpellModel
+	index: number;
+	changeSpell: (newSpell: SpellModel, index: number, book: number) => {},
+	book: number,
 }
 
 type StateType = {
@@ -24,47 +27,6 @@ type StateType = {
 	newDuration: number;
 	newDurationType: string;
 }
-
-const castTimes = [
-	{value: "Action"},
-	{value: "Reaction"},
-	{value: "Bonus Action"}
-];
-
-const durations = [
-	{value: "Instantaneous",},
-	{value: "Rounds",},
-	{value: "Minutes",},
-	{value: "Hours",},
-	{value: "Days",},
-];
-
-const dice = [
-	{value: "d4"},
-	{value: "d6"},
-	{value: "d8"},
-	{value: "d10"},
-	{value: "d12"},
-	{value: "d20"},
-];
-
-const effects = [
-	{value: "Acid"},
-	{value: "Bludgeoning"},
-	{value: "Cold"},
-	{value: "Fire"},
-	{value: "Force"},
-	{value: "Lightning"},
-	{value: "Necrotic"},
-	{value: "Piercing"},
-	{value: "Poison"},
-	{value: "Psychic"},
-	{value: "Radiant"},
-	{value: "Slashing"},
-	{value: "Thunder"},
-	{value: "Healing"},
-
-];
 
 class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 
@@ -86,6 +48,29 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 			newDurationType: props.spell.durationType,
 		};
 	}
+	
+	private save() {
+		const newSpell: SpellModel = {
+			name: this.state.newName,
+			spellbookName: this.state.spell.spellbookName,
+			spellbookID: this.state.spell.spellbookID,
+			spellID: this.state.spell.spellID,
+			diceType: this.state.newDiceType,
+			castTime: this.state.newCastTime,
+			range: this.state.newRange,
+			dice: this.state.newDice,
+			effectType: this.state.newEffectType,
+			desc: this.state.newDesc,
+			extraEffect: this.state.newExtraEffect,
+			duration: this.state.newDuration,
+			durationType: this.state.newDurationType,
+		};
+		this.setState({spell: newSpell});
+		
+		this.props.changeSpell(newSpell, this.props.index, this.props.book);
+		
+		Actions.pop();
+	}
 
 	render() {
 		return (<View>
@@ -95,7 +80,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 				<Dropdown
 					containerStyle={styles.dropdown}
 					label="Cast Time"
-					data={castTimes}
+					data={DropdownConfig.castTimes}
 					defaultValue={this.state.spell.castTime}
 					onChangeText={(value: string) => {
 						this.setCastTime(value)
@@ -104,7 +89,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 				<Dropdown
 					containerStyle={styles.dropdown}
 					label="Duration Type"
-					data={durations}
+					data={DropdownConfig.durations}
 					defaultValue={this.state.spell.durationType}
 					onChangeText={(value: string) => {
 						this.setDurationType(value)
@@ -146,7 +131,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 				<Dropdown
 					containerStyle={styles.dropdown}
 					label="Dice"
-					data={dice}
+					data={DropdownConfig.dice}
 					defaultValue={this.state.spell.diceType}
 					onChangeText={(value: string) => {
 						this.setDiceType(value)
@@ -160,7 +145,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 			<Dropdown
 				containerStyle={styles.dropdown}
 				label="Effect Type"
-				data={effects}
+				data={DropdownConfig.effects}
 				defaultValue={this.state.spell.effectType}
 				onChangeText={(value: string) => {
 					this.setEffectType(value)
@@ -252,27 +237,48 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 		});
 	}
 
-	private save() {
-		const newSpell: SpellModel = {
-			name: this.state.newName,
-			spellbookName: this.state.spell.spellbookName,
-			spellbookID: this.state.spell.spellbookID,
-			spellID: this.state.spell.spellID,
-			diceType: this.state.newDiceType,
-			castTime: this.state.newCastTime,
-			range: this.state.newRange,
-			dice: this.state.newDice,
-			effectType: this.state.newEffectType,
-			desc: this.state.newDesc,
-			extraEffect: this.state.newExtraEffect,
-			duration: this.state.newDuration,
-			durationType: this.state.newDurationType,
-		};
-		this.setState({spell: newSpell});
-		// Actions.pop();
-		Actions.replace("spell", {spell: newSpell, name: newSpell.name});
-		// Actions.push("spell", {spell: newSpell, title: newSpell})
-	}
 }
+
+const DropdownConfig = {
+	castTimes: [
+		{value: "Action"},
+		{value: "Reaction"},
+		{value: "Bonus Action"}
+	],
+	
+	durations: [
+		{value: "Instantaneous",},
+		{value: "Rounds",},
+		{value: "Minutes",},
+		{value: "Hours",},
+		{value: "Days",},
+	],
+	
+	dice: [
+		{value: "d4"},
+		{value: "d6"},
+		{value: "d8"},
+		{value: "d10"},
+		{value: "d12"},
+		{value: "d20"},
+	],
+	
+	effects: [
+		{value: "Acid"},
+		{value: "Bludgeoning"},
+		{value: "Cold"},
+		{value: "Fire"},
+		{value: "Force"},
+		{value: "Lightning"},
+		{value: "Necrotic"},
+		{value: "Piercing"},
+		{value: "Poison"},
+		{value: "Psychic"},
+		{value: "Radiant"},
+		{value: "Slashing"},
+		{value: "Thunder"},
+		{value: "Healing"},
+	],
+};
 
 export {SpellEditScreen};

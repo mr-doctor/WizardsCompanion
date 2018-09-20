@@ -28,7 +28,7 @@ var App = /** @class */ (function (_super) {
     }
     // 	spellbookModifier={this.addSpellbook.bind(this)}
     // spellbooks={this.state.spellbooks}
-    // spellModifier={this.newSpell.bind(this)}
+    // spellAdder={this.newSpell.bind(this)}
     App.prototype.render = function () {
         return (<Router>
 				<Stack key="root">

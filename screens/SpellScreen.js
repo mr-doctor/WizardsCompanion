@@ -84,8 +84,11 @@ var SpellScreen = /** @class */ (function (_super) {
             }
         }}/>);
     };
+    /*changeSpell(newSpell: SpellModel) {
+        this.setState({spell: newSpell});
+    }*/
     SpellScreen.prototype.edit = function () {
-        Actions.push("spell-edit", { spell: this.state.spell });
+        Actions.push("spell-edit", { spell: this.state.spell, index: this.props.index, book: this.props.book, changeSpell: this.props.spellEditor });
     };
     SpellScreen.prototype.upload = function () {
     };
