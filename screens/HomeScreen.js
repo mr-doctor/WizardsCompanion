@@ -23,9 +23,9 @@ var HomeScreen = /** @class */ (function (_super) {
         };
         return _this;
     }
-    HomeScreen.prototype.goToSpellbook = function (spellbook) {
+    HomeScreen.prototype.goToSpellbook = function (spellbook, index) {
         console.log("pressed");
-        Actions.push("spellbook", { spellbook: spellbook, title: spellbook.name });
+        Actions.push("spellbook", { spellbook: spellbook, spellModifier: this.props.spellModifier, index: index, title: spellbook.name });
     };
     HomeScreen.prototype.newSpellbook = function () {
         // this.props.pageProvider.newSpellbook();
@@ -40,17 +40,17 @@ var HomeScreen = /** @class */ (function (_super) {
         // Unique ID generation from https://gist.github.com/6174/6062387
         var id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         // this.setState({
-        /*spellbooks: */ this.props.modifier();
+        /*spellbooks: */ this.props.spellbookModifier();
         // });
         // this.props.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id});
         // console.log(this.props.spellbooks);
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
-        console.log(this.state.spellbooks);
+        console.log(this.props.spellbooks);
         return (<View>
 				{this.props.spellbooks.map(function (spellbook, i) {
-            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook); }} style={styles.listItem} key={i}>
+            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook, i); }} style={styles.listItem} key={i}>
 						<Text>{spellbook.name}</Text>
 					</TouchableOpacity>;
         })}

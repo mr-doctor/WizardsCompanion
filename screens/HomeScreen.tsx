@@ -2,13 +2,13 @@ import {Button, View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import * as React from "react";
 import {Actions} from "react-native-router-flux";
 import {SpellbookModel, SpellbookScreen} from "./SpellbookScreen";
-import {PageProvider} from "../providers/Page";
 
 type StateType = {
 	spellbooks: SpellbookModel[]
 }
 type PropType = {
-	modifier: () => {},
+	spellbookModifier: () => {},
+	spellModifier: (book: number) => {},
 	spellbooks: SpellbookModel[],
 }
 
@@ -26,9 +26,9 @@ class HomeScreen extends React.Component<PropType, StateType> {
 		title: "Wizard's Companion",
 	};
 
-	goToSpellbook(spellbook: SpellbookModel) {
+	goToSpellbook(spellbook: SpellbookModel, index: number) {
 		console.log("pressed");
-		Actions.push("spellbook", {spellbook: spellbook, title: spellbook.name});
+		Actions.push("spellbook", {spellbook: spellbook, spellModifier: this.props.spellModifier, index: index, title: spellbook.name});
 	}
 
 	newSpellbook() {
@@ -44,18 +44,18 @@ class HomeScreen extends React.Component<PropType, StateType> {
 		// Unique ID generation from https://gist.github.com/6174/6062387
 		let id: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 		// this.setState({
-			/*spellbooks: */this.props.modifier();
+			/*spellbooks: */this.props.spellbookModifier();
 		// });
 		// this.props.spellbooks.concat({spells: [], name: "Spellbook " + index, id: id});
 		// console.log(this.props.spellbooks);
 	}
 
 	render() {
-		console.log(this.state.spellbooks);
+		console.log(this.props.spellbooks);
 		return (<View>
 				{this.props.spellbooks.map((spellbook, i) =>
 					<TouchableOpacity
-						onPress={() => this.goToSpellbook(spellbook)}
+						onPress={() => this.goToSpellbook(spellbook, i)}
 						style={styles.listItem}
 						key={i}
 					>
