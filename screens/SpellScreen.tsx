@@ -15,7 +15,7 @@ type StateType = {
 	spell: SpellModel;
 }
 
-const FabConfig = {
+export const FabConfig = {
 	edit: {
 		text: "Edit",
 		name: "edit",
@@ -26,6 +26,11 @@ const FabConfig = {
 		name: "upload",
 		position: 1,
 	},
+	save: {
+		text: "Save",
+		name: "save",
+		position: 1,
+	}
 };
 
 class SpellScreen extends React.Component<ScreenProps, StateType> {

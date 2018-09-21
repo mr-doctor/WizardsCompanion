@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SpellModel} from "./SpellScreen";
+import {FabConfig, SpellModel} from "./SpellScreen";
 import {View, Text, ScrollView} from "react-native";
 import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import {Dropdown} from 'react-native-material-dropdown';
@@ -99,7 +99,7 @@ class SpellEditScreen extends React.Component<ScreenProps, StateType> {
 				<FormLabel>Description</FormLabel>
 				<FormInput defaultValue={this.state.spell.desc} onChangeText={(text: string) => this.setDesc(text)}/>
 			</ScrollView>
-			<FloatingAction onPressMain={() => this.save()}/>
+			<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.save();}}/>
 		</View>);
 	}
 

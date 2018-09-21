@@ -16,7 +16,7 @@ import * as React from "react";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
 import { FloatingAction } from 'react-native-floating-action';
-var FabConfig = {
+export var FabConfig = {
     edit: {
         text: "Edit",
         name: "edit",
@@ -27,6 +27,11 @@ var FabConfig = {
         name: "upload",
         position: 1,
     },
+    save: {
+        text: "Save",
+        name: "save",
+        position: 1,
+    }
 };
 var SpellScreen = /** @class */ (function (_super) {
     __extends(SpellScreen, _super);
