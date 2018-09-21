@@ -4,6 +4,7 @@ import {SpellbookModel} from "./SpellbookScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
 import {FloatingAction} from 'react-native-floating-action';
+import App from "../App";
 
 type ScreenProps = {
 	spell: SpellModel;
@@ -104,7 +105,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	upload() {
-		
+		App.uploadSpell(this.state.spell);
 	}
 	
 	update(spell: SpellModel) {

@@ -20,6 +20,7 @@
     "react-native-action-button": "^2.8.5",
     "react-native-elements": "latest",
     "react-native-fab": "^1.0.7",
+    "react-native-firebase": "^5.0.0-rc4",
     "react-native-floating-action": "https://github.com/santomegonzalo/react-native-floating-action",
     "react-native-icons": "^0.7.1",
     "react-native-material-dropdown": "^0.11.1",

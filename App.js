@@ -17,6 +17,7 @@ import { Router, Scene, Stack } from "react-native-router-flux";
 import { HomeScreen } from "./screens/HomeScreen";
 import { SpellScreen } from "./screens/SpellScreen";
 import { SpellEditScreen } from "./screens/SpellEditScreen";
+import firebase from 'react-native-firebase/firestore';
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
@@ -26,9 +27,57 @@ var App = /** @class */ (function (_super) {
         };
         return _this;
     }
-    // 	spellbookModifier={this.addSpellbook.bind(this)}
-    // spellbooks={this.state.spellbooks}
-    // spellAdder={this.newSpell.bind(this)}
+    App.uploadSpell = function (spell) {
+        var spellJSON = JSON.parse(JSON.stringify(spell));
+        firebase.firestore().collection("Spells").add(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
+            .then(function () {
+            console.log("Successfully uploaded to global database");
+        }).catch(function () {
+            console.log("Failed to upload");
+        });
+        firebase.firestore().collection(spell.spellbookName + spell.spellbookID).doc(spell.name + spell.spellID).set(spellJSON)
+            .then(function () {
+            console.log("Successfully uploaded to personal spellbook");
+        }).catch(function () {
+            console.log("Failed to upload");
+        });
+    };
+    App.downloadAllSpells = function () {
+        var collectionReference = firebase.firestore().collection("Spells");
+        return collectionReference.get();
+    };
+    App.downloadSpellsFrom = function (spellbook) {
+        var collectionReference = firebase.firestore().collection(spellbook);
+        return collectionReference.get();
+    };
+    App.displaySpells = function (querySnapshot) {
+        if (querySnapshot.empty) {
+            console.log("No docs found");
+            return [];
+        }
+        var spells = [];
+        querySnapshot.forEach(function (documentSnapshot) {
+            var data = documentSnapshot.data();
+            var spell = JSON.parse(JSON.stringify(data));
+            spells.push(spell);
+        });
+        return spells;
+    };
+    /*const spell: SpellModel = {
+            name: "",
+            spellbookName: "",
+            spellbookID: "",
+            spellID: "",
+            castTime: "",
+            duration: 0,
+            dice: 0,
+            range: "",
+            durationType: "",
+            extraEffect: 0,
+            diceType: "",
+            desc: "",
+            effectType: "",
+        };*/
     App.prototype.render = function () {
         return (<Router>
 				<Stack key="root">

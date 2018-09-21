@@ -16,6 +16,7 @@ import * as React from "react";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
 import { FloatingAction } from 'react-native-floating-action';
+import App from "../App";
 export var FabConfig = {
     edit: {
         text: "Edit",
@@ -95,6 +96,7 @@ var SpellScreen = /** @class */ (function (_super) {
         Actions.push("spell-edit", { spell: this.state.spell, update: this.update.bind(this) });
     };
     SpellScreen.prototype.upload = function () {
+        App.uploadSpell(this.state.spell);
     };
     SpellScreen.prototype.update = function (spell) {
         this.setState({ spell: spell });
