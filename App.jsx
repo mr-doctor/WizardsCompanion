@@ -13,44 +13,83 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var react_2 = require("react");
-var react_native_1 = require("react-native");
-var instructions = react_native_1.Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' +
-        'Shake or press menu button for dev menu',
-});
+var React = require("react");
+var SpellbookScreen_1 = require("./screens/SpellbookScreen");
+var react_native_router_flux_1 = require("react-native-router-flux");
+var HomeScreen_1 = require("./screens/HomeScreen");
+var SpellScreen_1 = require("./screens/SpellScreen");
+var SpellEditScreen_1 = require("./screens/SpellEditScreen");
+var react_native_firebase_1 = require("react-native-firebase");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function App(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            spellbooks: []
+        };
+        return _this;
     }
+    App.uploadSpell = function (spell) {
+        var spellJSON = JSON.parse(JSON.stringify(spell));
+        react_native_firebase_1.default.firestore().collection("Spells").doc(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
+            .then(function () {
+            console.log("Successfully uploaded to global database");
+        }).catch(function () {
+            console.log("Failed to upload");
+        });
+        react_native_firebase_1.default.firestore().collection(spell.spellbookName + spell.spellbookID).doc(spell.name + spell.spellID).set(spellJSON)
+            .then(function () {
+            console.log("Successfully uploaded to personal spellbook");
+        }).catch(function () {
+            console.log("Failed to upload");
+        });
+    };
+    App.downloadAllSpells = function () {
+        var collectionReference = react_native_firebase_1.default.firestore().collection("Spells");
+        return collectionReference.get();
+    };
+    App.downloadSpellsFrom = function (spellbook) {
+        var collectionReference = react_native_firebase_1.default.firestore().collection(spellbook);
+        return collectionReference.get();
+    };
+    App.displaySpells = function (querySnapshot) {
+        if (querySnapshot.empty) {
+            console.log("No docs found");
+            return [];
+        }
+        var spells = [];
+        querySnapshot.forEach(function (documentSnapshot) {
+            var data = documentSnapshot.data();
+            var spell = JSON.parse(JSON.stringify(data));
+            spells.push(spell);
+        });
+        return spells;
+    };
+    /*const spell: SpellModel = {
+            name: "",
+            spellbookName: "",
+            spellbookID: "",
+            spellID: "",
+            castTime: "",
+            duration: 0,
+            dice: 0,
+            range: "",
+            durationType: "",
+            extraEffect: 0,
+            diceType: "",
+            desc: "",
+            effectType: "",
+        };*/
     App.prototype.render = function () {
-        return (<react_native_1.View style={styles.container}>
-        <react_native_1.Text style={styles.welcome}>Just fucking kill me already.</react_native_1.Text>
-        <react_native_1.Text style={styles.instructions}>React native is actually terrible.</react_native_1.Text>
-        <react_native_1.Text style={styles.instructions}>{instructions}</react_native_1.Text>
-      </react_native_1.View>);
+        return (<react_native_router_flux_1.Router>
+				<react_native_router_flux_1.Stack key="root">
+					<react_native_router_flux_1.Scene key="home" component={HomeScreen_1.HomeScreen} title="Home Screen"/>
+					<react_native_router_flux_1.Scene key="spellbook" component={SpellbookScreen_1.SpellbookScreen} title="Spellbook"/>
+					<react_native_router_flux_1.Scene key="spell" component={SpellScreen_1.SpellScreen} title="Spell"/>
+					<react_native_router_flux_1.Scene key="spell-edit" component={SpellEditScreen_1.SpellEditScreen} title={"Spell Edit"}/>
+				</react_native_router_flux_1.Stack>
+			</react_native_router_flux_1.Router>);
     };
     return App;
-}(react_2.Component));
+}(React.Component));
 exports.default = App;
-var styles = react_native_1.StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});

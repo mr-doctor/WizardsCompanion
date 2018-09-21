@@ -17,7 +17,7 @@ import { Router, Scene, Stack } from "react-native-router-flux";
 import { HomeScreen } from "./screens/HomeScreen";
 import { SpellScreen } from "./screens/SpellScreen";
 import { SpellEditScreen } from "./screens/SpellEditScreen";
-import firebase from 'react-native-firebase/firestore';
+import firebase from 'react-native-firebase';
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
@@ -29,7 +29,7 @@ var App = /** @class */ (function (_super) {
     }
     App.uploadSpell = function (spell) {
         var spellJSON = JSON.parse(JSON.stringify(spell));
-        firebase.firestore().collection("Spells").add(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
+        firebase.firestore().collection("Spells").doc(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
             .then(function () {
             console.log("Successfully uploaded to global database");
         }).catch(function () {

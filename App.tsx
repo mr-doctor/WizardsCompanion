@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {Component} from 'react';
 import {AppRegistry, Button, Platform, StyleSheet, Text, View} from 'react-native';
 import {SpellbookModel, SpellbookScreen} from "./screens/SpellbookScreen";
@@ -7,7 +7,8 @@ import {HomeScreen} from "./screens/HomeScreen";
 import {Store} from "react-native-navigation/lib/dist/components/Store";
 import {SpellModel, SpellScreen} from "./screens/SpellScreen";
 import {SpellEditScreen} from "./screens/SpellEditScreen";
-import firebase from 'react-native-firebase/firestore';
+import firebase from 'react-native-firebase';
+import {CollectionReference, DocumentSnapshot, QuerySnapshot} from "react-native-firebase/firestore";
 
 type StateType = {
 	spellbooks: SpellbookModel[];
@@ -27,7 +28,7 @@ class App extends React.Component<{}, StateType> {
 	static uploadSpell(spell: SpellModel) {
 		let spellJSON = JSON.parse(JSON.stringify(spell));
 		
-		firebase.firestore().collection("Spells").add(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
+		firebase.firestore().collection("Spells").doc(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
 			.then(function () {
 				console.log("Successfully uploaded to global database");
 			}).catch(function () {
@@ -44,25 +45,25 @@ class App extends React.Component<{}, StateType> {
 		);
 	}
 	
-	static downloadAllSpells(): Promise<firebase.DocumentSnapshot> {
+	static downloadAllSpells(): Promise<QuerySnapshot> {
 		const collectionReference = firebase.firestore().collection("Spells");
 		
 		return collectionReference.get();
 	}
 	
-	static downloadSpellsFrom(spellbook: string): Promise<firebase.DocumentSnapshot> {
+	static downloadSpellsFrom(spellbook: string): Promise<QuerySnapshot> {
 		const collectionReference = firebase.firestore().collection(spellbook);
 		
 		return collectionReference.get();
 	}
 	
-	static displaySpells(querySnapshot: firebase.CollectionReference): SpellModel[] {
+	static displaySpells(querySnapshot: QuerySnapshot): SpellModel[] {
 		if (querySnapshot.empty) {
 			console.log("No docs found");
 			return [];
 		}
 		const spells: SpellModel[] = [];
-		querySnapshot.forEach(function (documentSnapshot: firebase.DocumentSnapshot) {
+		querySnapshot.forEach(function (documentSnapshot: DocumentSnapshot) {
 			let data = documentSnapshot.data();
 			let spell = JSON.parse(JSON.stringify(data));
 			spells.push(spell);

@@ -22,7 +22,6 @@
     "react-native-fab": "^1.0.7",
     "react-native-firebase": "^5.0.0-rc4",
     "react-native-floating-action": "https://github.com/santomegonzalo/react-native-floating-action",
-    "react-native-icons": "^0.7.1",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-navigation": "^2.0.2555",
     "react-native-router-flux": "^4.0.1",
