@@ -11,31 +11,46 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import React from 'react';
+import * as React from 'react';
 import { SpellbookScreen } from "./screens/SpellbookScreen";
 import { Router, Scene, Stack } from "react-native-router-flux";
 import { HomeScreen } from "./screens/HomeScreen";
 import { SpellScreen } from "./screens/SpellScreen";
 import { SpellEditScreen } from "./screens/SpellEditScreen";
-import firebase from 'react-native-firebase';
+import { SpellbookEditScreen } from "./screens/SpellbookEditScreen";
+var firebase = require("firebase");
+// Required for side-effects
+require("firebase/firestore");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            spellbooks: []
+            spellbooks: [],
         };
+        var config = {
+            apiKey: "AIzaSyAFpnooV_7daHyqcCqBgDZ39i6mtWNTwCQ",
+            authDomain: "wizard-s-companion-rn.firebaseapp.com",
+            databaseURL: "https://wizard-s-companion-rn.firebaseio.com",
+            projectId: "wizard-s-companion-rn",
+            storageBucket: "wizard-s-companion-rn.appspot.com",
+            messagingSenderId: "426156848049"
+        };
+        firebase.initializeApp(config);
+        App.firestore = firebase.firestore();
+        var settings = { timestampsInSnapshots: true };
+        App.firestore.settings(settings);
         return _this;
     }
     App.uploadSpell = function (spell) {
         var spellJSON = JSON.parse(JSON.stringify(spell));
-        firebase.firestore().collection("Spells").doc(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
+        App.firestore.collection("Spells").doc(spell.spellbookID + " " + spell.spellID).set(spellJSON)
             .then(function () {
             console.log("Successfully uploaded to global database");
         }).catch(function () {
             console.log("Failed to upload");
         });
-        firebase.firestore().collection(spell.spellbookName + spell.spellbookID).doc(spell.name + spell.spellID).set(spellJSON)
+        App.firestore.collection(spell.spellbookID).doc(spell.spellID).set(spellJSON)
             .then(function () {
             console.log("Successfully uploaded to personal spellbook");
         }).catch(function () {
@@ -43,11 +58,11 @@ var App = /** @class */ (function (_super) {
         });
     };
     App.downloadAllSpells = function () {
-        var collectionReference = firebase.firestore().collection("Spells");
+        var collectionReference = App.firestore.collection("Spells");
         return collectionReference.get();
     };
-    App.downloadSpellsFrom = function (spellbook) {
-        var collectionReference = firebase.firestore().collection(spellbook);
+    App.downloadSpellsFrom = function (spellbookID) {
+        var collectionReference = App.firestore.collection(spellbookID);
         return collectionReference.get();
     };
     App.displaySpells = function (querySnapshot) {
@@ -85,6 +100,7 @@ var App = /** @class */ (function (_super) {
 					<Scene key="spellbook" component={SpellbookScreen} title="Spellbook"/>
 					<Scene key="spell" component={SpellScreen} title="Spell"/>
 					<Scene key="spell-edit" component={SpellEditScreen} title={"Spell Edit"}/>
+					<Scene key="spellbook-edit" component={SpellbookEditScreen} title="Spellbook Edit"/>
 				</Stack>
 			</Router>);
     };

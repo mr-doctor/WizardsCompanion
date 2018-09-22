@@ -1,8 +1,9 @@
 import {Button, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
-import {SpellModel} from "./SpellScreen";
+import {FabConfig, SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
+import {FloatingAction} from "react-native-floating-action";
 // import {Icon} from "../node_modules/@types/react-native-vector-icons/Icon";
 var dotProp = require('dot-prop-immutable');
 
@@ -10,7 +11,7 @@ var dotProp = require('dot-prop-immutable');
 type ScreenProps = {
 	spellbook: SpellbookModel;
 	index: number,
-	update: (index: number, spellbook: SpellbookModel) => {}
+	update: (index: number, spellbook: SpellbookModel) => {},
 }
 
 type StateType = {
@@ -26,18 +27,25 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			spellbook: this.props.spellbook,
 		}
 	}
-	
+
 	update(spell: SpellModel, index: number) {
 		console.log(index);
-		this.setState(dotProp.set(this.state,`spellbook.spells.${index}`, spell), ()=>{
+		this.setState(dotProp.set(this.state, `spellbook.spells.${index}`, spell), () => {
 			this.props.update(this.props.index, this.state.spellbook);
 		})
 	}
-	
+
+	updateName(spellbook: SpellbookModel) {
+		this.setState(dotProp.set(this.state, `spellbook`, spellbook), () => {
+			this.props.update(this.props.index, this.state.spellbook);
+		});
+		console.log(this.state.spellbook);
+	}
+
 	jumpToSpell(spell: SpellModel, index: number) {
 		Actions.push("spell", {spell: spell, title: spell.name, update: this.update.bind(this), index})
 	}
-	
+
 	newSpell() {
 		let index = 1;
 		for (let i = 0; i < this.state.spellbook.spells.length; i++) {
@@ -61,37 +69,56 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			duration: 6,
 			durationType: "Instantaneous",
 		};
-		
+
 		this.setState({
 			spellbook: {
 				spells: this.state.spellbook.spells.concat(spell),
 				name: this.state.spellbook.name,
 				id: this.state.spellbook.id,
 			}
-		},()=>{
+		}, () => {
 			this.props.update(this.props.index, this.state.spellbook)
 		})
 	}
 
 	render() {
-		return (<View>
-				{
-					this.state.spellbook.spells.map((spell, i) => <TouchableOpacity
-						onPress={() => this.jumpToSpell(spell, i)}
-						style={styles.listItem}
-						key={i}
-					>
-						<Text>
-							{spell.name}
-						</Text>
-					</TouchableOpacity>)
-				}
-				{/*<TouchableOpacity onPress={() => this.newSpell()}><View>
+		return (<View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
+			{
+				this.state.spellbook.spells.map((spell, i) => <TouchableOpacity
+					onPress={() => this.jumpToSpell(spell, i)}
+					style={styles.listItem}
+					key={i}
+				>
+					<Text>
+						{spell.name}
+					</Text>
+				</TouchableOpacity>)
+			}
+			{/*<TouchableOpacity onPress={() => this.newSpell()}><View>
 					<Text>+</Text>
 				</View></TouchableOpacity>*/}
-				<Button title={"+"} onPress={() => this.newSpell()}/>
-			</View>
+			<Button title={"+"} onPress={() => this.newSpell()}/>
+			{this.fabButton()}
+		</View>);
+	}
+
+	fabButton() {
+		const actions = [{
+			text: FabConfig.edit.text,
+			position: FabConfig.edit.position,
+			name: FabConfig.edit.name,
+		}, {
+			text: FabConfig.upload.text,
+			position: FabConfig.upload.position,
+			name: FabConfig.upload.name,
+		}];
+		return (
+			<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.edit();}}/>
 		)
+	}
+
+	edit() {
+		Actions.push("spellbook-edit", {spellbook: this.state.spellbook, update: this.updateName.bind(this)});
 	}
 }
 

@@ -7,8 +7,11 @@ import {HomeScreen} from "./screens/HomeScreen";
 import {Store} from "react-native-navigation/lib/dist/components/Store";
 import {SpellModel, SpellScreen} from "./screens/SpellScreen";
 import {SpellEditScreen} from "./screens/SpellEditScreen";
-import firebase from 'react-native-firebase';
 import {CollectionReference, DocumentSnapshot, QuerySnapshot} from "react-native-firebase/firestore";
+import {SpellbookEditScreen} from "./screens/SpellbookEditScreen";
+const firebase = require("firebase");
+// Required for side-effects
+require("firebase/firestore");
 
 type StateType = {
 	spellbooks: SpellbookModel[];
@@ -16,19 +19,36 @@ type StateType = {
 
 class App extends React.Component<{}, StateType> {
 	
+	static firestore: firebase.firestore.Firestore;
+	
 	constructor(props: any) {
 		super(props);
 		
 		this.state = {
-			spellbooks: []
+			spellbooks: [],
 		};
+
+		const config = {
+			apiKey: "AIzaSyAFpnooV_7daHyqcCqBgDZ39i6mtWNTwCQ",
+			authDomain: "wizard-s-companion-rn.firebaseapp.com",
+			databaseURL: "https://wizard-s-companion-rn.firebaseio.com",
+			projectId: "wizard-s-companion-rn",
+			storageBucket: "wizard-s-companion-rn.appspot.com",
+			messagingSenderId: "426156848049"
+		};
+
+		firebase.initializeApp(config);
+
+		App.firestore = firebase.firestore();
+		const settings = {timestampsInSnapshots: true};
+		App.firestore.settings(settings);
 		
 	}
 	
 	static uploadSpell(spell: SpellModel) {
 		let spellJSON = JSON.parse(JSON.stringify(spell));
 		
-		firebase.firestore().collection("Spells").doc(spell.name + spell.spellbookID + " " + spell.spellID).set(spellJSON)
+		App.firestore.collection("Spells").doc(spell.spellbookID + " " + spell.spellID).set(spellJSON)
 			.then(function () {
 				console.log("Successfully uploaded to global database");
 			}).catch(function () {
@@ -36,7 +56,7 @@ class App extends React.Component<{}, StateType> {
 			}
 		);
 		
-		firebase.firestore().collection(spell.spellbookName + spell.spellbookID).doc(spell.name + spell.spellID).set(spellJSON)
+		App.firestore.collection(spell.spellbookID).doc(spell.spellID).set(spellJSON)
 			.then(function () {
 				console.log("Successfully uploaded to personal spellbook");
 			}).catch(function () {
@@ -46,13 +66,13 @@ class App extends React.Component<{}, StateType> {
 	}
 	
 	static downloadAllSpells(): Promise<QuerySnapshot> {
-		const collectionReference = firebase.firestore().collection("Spells");
+		const collectionReference = App.firestore.collection("Spells");
 		
 		return collectionReference.get();
 	}
 	
-	static downloadSpellsFrom(spellbook: string): Promise<QuerySnapshot> {
-		const collectionReference = firebase.firestore().collection(spellbook);
+	static downloadSpellsFrom(spellbookID: string): Promise<QuerySnapshot> {
+		const collectionReference = App.firestore.collection(spellbookID);
 		
 		return collectionReference.get();
 	}
@@ -95,6 +115,7 @@ class App extends React.Component<{}, StateType> {
 					<Scene key="spellbook" component={SpellbookScreen} title="Spellbook"/>
 					<Scene key="spell" component={SpellScreen} title="Spell"/>
 					<Scene key="spell-edit" component={SpellEditScreen} title={"Spell Edit"}/>
+					<Scene key="spellbook-edit" component={SpellbookEditScreen} title="Spellbook Edit"/>
 				</Stack>
 			</Router>
 		);

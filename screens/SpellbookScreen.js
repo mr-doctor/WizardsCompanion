@@ -13,8 +13,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
+import { FabConfig } from "./SpellScreen";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
+import { FloatingAction } from "react-native-floating-action";
 // import {Icon} from "../node_modules/@types/react-native-vector-icons/Icon";
 var dotProp = require('dot-prop-immutable');
 var SpellbookScreen = /** @class */ (function (_super) {
@@ -32,6 +34,13 @@ var SpellbookScreen = /** @class */ (function (_super) {
         this.setState(dotProp.set(this.state, "spellbook.spells." + index, spell), function () {
             _this.props.update(_this.props.index, _this.state.spellbook);
         });
+    };
+    SpellbookScreen.prototype.updateName = function (spellbook) {
+        var _this = this;
+        this.setState(dotProp.set(this.state, "spellbook", spellbook), function () {
+            _this.props.update(_this.props.index, _this.state.spellbook);
+        });
+        console.log(this.state.spellbook);
     };
     SpellbookScreen.prototype.jumpToSpell = function (spell, index) {
         Actions.push("spell", { spell: spell, title: spell.name, update: this.update.bind(this), index: index });
@@ -72,15 +81,32 @@ var SpellbookScreen = /** @class */ (function (_super) {
     };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
-        return (<View>
-				{this.state.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
-						<Text>
-							{spell.name}
-						</Text>
-					</TouchableOpacity>; })}
-				
-				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
-			</View>);
+        return (<View style={{ flex: 1, backgroundColor: '#f3f3f3' }}>
+			{this.state.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
+					<Text>
+						{spell.name}
+					</Text>
+				</TouchableOpacity>; })}
+			
+			<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
+			{this.fabButton()}
+		</View>);
+    };
+    SpellbookScreen.prototype.fabButton = function () {
+        var _this = this;
+        var actions = [{
+                text: FabConfig.edit.text,
+                position: FabConfig.edit.position,
+                name: FabConfig.edit.name,
+            }, {
+                text: FabConfig.upload.text,
+                position: FabConfig.upload.position,
+                name: FabConfig.upload.name,
+            }];
+        return (<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.edit(); }}/>);
+    };
+    SpellbookScreen.prototype.edit = function () {
+        Actions.push("spellbook-edit", { spellbook: this.state.spellbook, update: this.updateName.bind(this) });
     };
     return SpellbookScreen;
 }(React.Component));
