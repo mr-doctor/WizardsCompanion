@@ -11,9 +11,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
+import { Button } from "react-native-elements";
 var dotProp = require('dot-prop-immutable');
 var HomeScreen = /** @class */ (function (_super) {
     __extends(HomeScreen, _super);
@@ -53,7 +54,7 @@ var HomeScreen = /** @class */ (function (_super) {
         })}
 					</ScrollView>
 				</View>
-				<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+				<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
 			</View>);
     };
     HomeScreen.navigationOptions = {
@@ -62,7 +63,9 @@ var HomeScreen = /** @class */ (function (_super) {
     return HomeScreen;
 }(React.Component));
 export var styles = StyleSheet.create({
-    addButton: {},
+    addButton: {
+        backgroundColor: '#da6e00',
+    },
     container: {
         flex: 1,
     },
@@ -88,6 +91,7 @@ export var styles = StyleSheet.create({
         borderRadius: 0,
         borderWidth: 0.5,
         borderColor: '#d6d7da',
+        padding: 10,
         backgroundColor: "#d6d6d6",
         width: "90%",
         height: 40,

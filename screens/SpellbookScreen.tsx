@@ -1,6 +1,7 @@
-import {Button, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {ScrollView, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import {FabConfig, SpellModel} from "./SpellScreen";
+import {Button} from "react-native-elements"
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
 import {FloatingAction} from "react-native-floating-action";
@@ -97,7 +98,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 						}
 					</ScrollView>
 				</View>
-				<Button title={"+"} onPress={() => this.newSpell()}/>
+				<Button buttonStyle={styles.addButton} title={"+"} onPress={() => this.newSpell()}/>
 			</View>
 		);
 	}

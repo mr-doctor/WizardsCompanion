@@ -11,9 +11,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import { FabConfig } from "./SpellScreen";
+import { Button } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
 import { FloatingAction } from "react-native-floating-action";
@@ -91,7 +92,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
         })}
 					</ScrollView>
 				</View>
-				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
+				<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpell(); }}/>
 			</View>);
     };
     SpellbookScreen.prototype.fabButton = function () {
