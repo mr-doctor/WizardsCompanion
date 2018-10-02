@@ -11,8 +11,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
+import { Button } from "react-native-elements";
 import { FabConfig } from "./SpellScreen";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
@@ -59,15 +60,15 @@ var SpellbookScreen = /** @class */ (function (_super) {
             spellbookID: this.state.spellbook.id,
             // Unique ID generation from https://gist.github.com/6174/6062387
             spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-            diceType: "d8",
-            castTime: "Action",
-            range: "1",
-            dice: 1,
-            effectType: "Force",
-            desc: "Hits da ting mon",
-            extraEffect: 4,
-            duration: 6,
-            durationType: "Instantaneous",
+            diceType: "",
+            castTime: "",
+            range: "",
+            dice: 0,
+            effectType: "",
+            desc: "",
+            extraEffect: 0,
+            duration: 0,
+            durationType: "",
         };
         this.setState({
             spellbook: {
@@ -87,8 +88,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
 						{spell.name}
 					</Text>
 				</TouchableOpacity>; })}
-			
-			<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
+			<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpell(); }}/>
 			{this.fabButton()}
 		</View>);
     };

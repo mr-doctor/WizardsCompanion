@@ -78,21 +78,6 @@ var App = /** @class */ (function (_super) {
         });
         return spells;
     };
-    /*const spell: SpellModel = {
-            name: "",
-            spellbookName: "",
-            spellbookID: "",
-            spellID: "",
-            castTime: "",
-            duration: 0,
-            dice: 0,
-            range: "",
-            durationType: "",
-            extraEffect: 0,
-            diceType: "",
-            desc: "",
-            effectType: "",
-        };*/
     App.prototype.render = function () {
         return (<Router>
 				<Stack key="root">

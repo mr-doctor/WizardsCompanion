@@ -1,4 +1,4 @@
-import {Button, View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {Button, View, Text, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import * as React from "react";
 import {Actions} from "react-native-router-flux";
 import {SpellbookModel, SpellbookScreen} from "./SpellbookScreen";
@@ -46,7 +46,7 @@ class HomeScreen extends React.Component<PropType, StateType> {
 	}
 	
 	render() {
-		return (<View>
+		return (<View style={styles.container}><ScrollView style={{flex: 1, flexDirection: 'row',}}>
 				{this.state.spellbooks.map((spellbook, i) =>
 					<TouchableOpacity
 						onPress={() => this.goToSpellbook(spellbook, i)}
@@ -56,13 +56,32 @@ class HomeScreen extends React.Component<PropType, StateType> {
 						<Text>{spellbook.name}</Text>
 					</TouchableOpacity>)
 				}
-				<Button title={"+"} onPress={() => this.newSpellbook()}/>
+				
+			</ScrollView>
+				{this.renderButton()}
 			</View>
 		);
+	}
+	
+	renderButton() {
+		return (<View style={styles.container}>
+			<Button title={"+"} onPress={() => this.newSpellbook()}/>
+		</View>);
 	}
 }
 
 export const styles = StyleSheet.create({
+	
+	addButton: {
+		alignSelf: 'flex-end',
+		position: 'absolute',
+		flex: 1,
+		width: "100%"
+	},
+	
+	container: {
+		flex: 1,
+	},
 	
 	actionButtonIcon: {
 		fontSize: 20,

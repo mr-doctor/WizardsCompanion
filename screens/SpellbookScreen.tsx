@@ -1,5 +1,6 @@
-import {Button, Text, TouchableOpacity, View} from "react-native";
+import {Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
+import {Button} from "react-native-elements";
 import {FabConfig, SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
@@ -59,15 +60,15 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			spellbookID: this.state.spellbook.id,
 			// Unique ID generation from https://gist.github.com/6174/6062387
 			spellID: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-			diceType: "d8",
-			castTime: "Action",
-			range: "1",
-			dice: 1,
-			effectType: "Force",
-			desc: "Hits da ting mon",
-			extraEffect: 4,
-			duration: 6,
-			durationType: "Instantaneous",
+			diceType: "",
+			castTime: "",
+			range: "",
+			dice: 0,
+			effectType: "",
+			desc: "",
+			extraEffect: 0,
+			duration: 0,
+			durationType: "",
 		};
 
 		this.setState({
@@ -94,10 +95,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 					</Text>
 				</TouchableOpacity>)
 			}
-			{/*<TouchableOpacity onPress={() => this.newSpell()}><View>
-					<Text>+</Text>
-				</View></TouchableOpacity>*/}
-			<Button title={"+"} onPress={() => this.newSpell()}/>
+			<Button buttonStyle={styles.addButton} title={"+"} onPress={() => this.newSpell()}/>
 			{this.fabButton()}
 		</View>);
 	}

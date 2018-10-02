@@ -91,21 +91,6 @@ class App extends React.Component<{}, StateType> {
 		
 		return spells;
 	}
-	/*const spell: SpellModel = {
-			name: "",
-			spellbookName: "",
-			spellbookID: "",
-			spellID: "",
-			castTime: "",
-			duration: 0,
-			dice: 0,
-			range: "",
-			durationType: "",
-			extraEffect: 0,
-			diceType: "",
-			desc: "",
-			effectType: "",
-		};*/
 	
 	render() {
 		return (

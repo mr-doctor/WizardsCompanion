@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Button, View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
 var dotProp = require('dot-prop-immutable');
@@ -43,14 +43,22 @@ var HomeScreen = /** @class */ (function (_super) {
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
-        return (<View>
+        return (<View style={styles.container}><ScrollView style={{ flex: 1, flexDirection: 'row', }}>
 				{this.state.spellbooks.map(function (spellbook, i) {
             return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook, i); }} style={styles.listItem} key={i}>
 						<Text>{spellbook.name}</Text>
 					</TouchableOpacity>;
         })}
-				<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+				
+			</ScrollView>
+				{this.renderButton()}
 			</View>);
+    };
+    HomeScreen.prototype.renderButton = function () {
+        var _this = this;
+        return (<View style={styles.container}>
+			<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+		</View>);
     };
     HomeScreen.navigationOptions = {
         title: "Wizard's Companion",
@@ -58,6 +66,15 @@ var HomeScreen = /** @class */ (function (_super) {
     return HomeScreen;
 }(React.Component));
 export var styles = StyleSheet.create({
+    addButton: {
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        flex: 1,
+        width: "100%"
+    },
+    container: {
+        flex: 1,
+    },
     actionButtonIcon: {
         fontSize: 20,
         height: 22,
