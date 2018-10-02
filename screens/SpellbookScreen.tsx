@@ -1,6 +1,5 @@
-import {Text, TouchableOpacity, View} from "react-native";
+import {Button, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
-import {Button} from "react-native-elements";
 import {FabConfig, SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
@@ -81,23 +80,26 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 			this.props.update(this.props.index, this.state.spellbook)
 		})
 	}
-
+	
 	render() {
-		return (<View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
-			{
-				this.state.spellbook.spells.map((spell, i) => <TouchableOpacity
-					onPress={() => this.jumpToSpell(spell, i)}
-					style={styles.listItem}
-					key={i}
-				>
-					<Text>
-						{spell.name}
-					</Text>
-				</TouchableOpacity>)
-			}
-			<Button buttonStyle={styles.addButton} title={"+"} onPress={() => this.newSpell()}/>
-			{this.fabButton()}
-		</View>);
+		return (
+			<View style={styles.container}>
+				<View style={{flex: 1}}>
+					<ScrollView style={{flex: 1}}>
+						{this.state.spellbook.spells.map((spell, i) =>
+							<TouchableOpacity
+								onPress={() => this.jumpToSpell(spell, i)}
+								style={styles.listItem}
+								key={i}
+							>
+								<Text>{spell.name}</Text>
+							</TouchableOpacity>)
+						}
+					</ScrollView>
+				</View>
+				<Button title={"+"} onPress={() => this.newSpell()}/>
+			</View>
+		);
 	}
 
 	fabButton() {

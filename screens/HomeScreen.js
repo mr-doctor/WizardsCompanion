@@ -43,22 +43,18 @@ var HomeScreen = /** @class */ (function (_super) {
     };
     HomeScreen.prototype.render = function () {
         var _this = this;
-        return (<View style={styles.container}><ScrollView style={{ flex: 1, flexDirection: 'row', }}>
-				{this.state.spellbooks.map(function (spellbook, i) {
-            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook, i); }} style={styles.listItem} key={i}>
-						<Text>{spellbook.name}</Text>
-					</TouchableOpacity>;
-        })}
-				
-			</ScrollView>
-				{this.renderButton()}
-			</View>);
-    };
-    HomeScreen.prototype.renderButton = function () {
-        var _this = this;
         return (<View style={styles.container}>
-			<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
-		</View>);
+				<View style={{ flex: 1 }}>
+					<ScrollView style={{ flex: 1 }}>
+						{this.state.spellbooks.map(function (spellbook, i) {
+            return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook, i); }} style={styles.listItem} key={i}>
+								<Text>{spellbook.name}</Text>
+							</TouchableOpacity>;
+        })}
+					</ScrollView>
+				</View>
+				<Button title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+			</View>);
     };
     HomeScreen.navigationOptions = {
         title: "Wizard's Companion",
@@ -66,12 +62,7 @@ var HomeScreen = /** @class */ (function (_super) {
     return HomeScreen;
 }(React.Component));
 export var styles = StyleSheet.create({
-    addButton: {
-        alignSelf: 'flex-end',
-        position: 'absolute',
-        flex: 1,
-        width: "100%"
-    },
+    addButton: {},
     container: {
         flex: 1,
     },

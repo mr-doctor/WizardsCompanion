@@ -46,37 +46,31 @@ class HomeScreen extends React.Component<PropType, StateType> {
 	}
 	
 	render() {
-		return (<View style={styles.container}><ScrollView style={{flex: 1, flexDirection: 'row',}}>
-				{this.state.spellbooks.map((spellbook, i) =>
-					<TouchableOpacity
-						onPress={() => this.goToSpellbook(spellbook, i)}
-						style={styles.listItem}
-						key={i}
-					>
-						<Text>{spellbook.name}</Text>
-					</TouchableOpacity>)
-				}
-				
-			</ScrollView>
-				{this.renderButton()}
+		return (
+			<View style={styles.container}>
+				<View style={{flex: 1}}>
+					<ScrollView style={{flex: 1}}>
+						{this.state.spellbooks.map((spellbook, i) =>
+							<TouchableOpacity
+								onPress={() => this.goToSpellbook(spellbook, i)}
+								style={styles.listItem}
+								key={i}
+							>
+								<Text>{spellbook.name}</Text>
+							</TouchableOpacity>)
+						}
+					</ScrollView>
+				</View>
+				<Button title={"+"} onPress={() => this.newSpellbook()}/>
 			</View>
 		);
-	}
-	
-	renderButton() {
-		return (<View style={styles.container}>
-			<Button title={"+"} onPress={() => this.newSpellbook()}/>
-		</View>);
 	}
 }
 
 export const styles = StyleSheet.create({
 	
 	addButton: {
-		alignSelf: 'flex-end',
-		position: 'absolute',
-		flex: 1,
-		width: "100%"
+	
 	},
 	
 	container: {

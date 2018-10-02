@@ -11,9 +11,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Text, TouchableOpacity, View } from "react-native";
+import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
-import { Button } from "react-native-elements";
 import { FabConfig } from "./SpellScreen";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
@@ -82,15 +81,18 @@ var SpellbookScreen = /** @class */ (function (_super) {
     };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
-        return (<View style={{ flex: 1, backgroundColor: '#f3f3f3' }}>
-			{this.state.spellbook.spells.map(function (spell, i) { return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
-					<Text>
-						{spell.name}
-					</Text>
-				</TouchableOpacity>; })}
-			<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpell(); }}/>
-			{this.fabButton()}
-		</View>);
+        return (<View style={styles.container}>
+				<View style={{ flex: 1 }}>
+					<ScrollView style={{ flex: 1 }}>
+						{this.state.spellbook.spells.map(function (spell, i) {
+            return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
+								<Text>{spell.name}</Text>
+							</TouchableOpacity>;
+        })}
+					</ScrollView>
+				</View>
+				<Button title={"+"} onPress={function () { return _this.newSpell(); }}/>
+			</View>);
     };
     SpellbookScreen.prototype.fabButton = function () {
         var _this = this;
