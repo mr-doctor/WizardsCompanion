@@ -57,7 +57,7 @@ class HomeScreen extends React.Component<PropType, StateType> {
 								style={styles.listItem}
 								key={i}
 							>
-								<Text>{spellbook.name}</Text>
+								<Text style={styles.listText}>{spellbook.name}</Text>
 								<TouchableOpacity
 									style={styles.deleteButton}
 									key={i}
@@ -94,12 +94,16 @@ export const styles = StyleSheet.create({
 	},
 	
 	deleteButton: {
-		height: 30,
+		height: "100%",
 		width: 50,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
 		backgroundColor: 'red',
+	},
+	
+	listText: {
+		marginLeft: 5,
 	},
 	
 	addSpellContainer: {
@@ -160,7 +164,7 @@ export const styles = StyleSheet.create({
 		borderRadius: 0,
 		borderWidth: 0.5,
 		borderColor: '#d6d7da',
-		padding: 10,
+		marginBottom: 5,
 		backgroundColor: "#d6d6d6",
 		width: "90%",
 		height: 40,

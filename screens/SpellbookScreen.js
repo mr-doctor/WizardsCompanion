@@ -100,7 +100,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
 					<ScrollView style={{ flex: 1 }}>
 						{this.state.spellbook.spells.map(function (spell, i) {
             return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
-								<Text>{spell.name}</Text>
+								<Text style={styles.listText}>{spell.name}</Text> 
 								<TouchableOpacity style={styles.deleteButton} key={i} onPress={function () { return _this.delete(i); }}>
 									<Text style={styles.deleteButtonText}>{"DELETE"}</Text>
 								</TouchableOpacity>

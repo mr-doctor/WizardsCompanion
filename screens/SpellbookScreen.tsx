@@ -107,7 +107,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 								style={styles.listItem}
 								key={i}
 							>
-								<Text>{spell.name}</Text>
+								<Text style={styles.listText}>{spell.name}</Text> 
 								<TouchableOpacity
 									style={styles.deleteButton}
 									key={i}
