@@ -109,12 +109,12 @@ var SpellbookScreen = /** @class */ (function (_super) {
 					</ScrollView>
 				</View>
 				<View style={styles.addSpellContainer}>
-					<TouchableOpacity style={styles.addButton} key={0} onPress={function () { return _this.newSpell(); }}>
-						<Icon name={"add"}/>
+					<TouchableOpacity style={styles.addSpellButton} key={0} onPress={function () { return _this.newSpell(); }}>
+						<Icon color={"white"} name={"add"}/>
 					</TouchableOpacity>
 					
-					<TouchableOpacity style={styles.addButton} key={0} onPress={function () { return _this.newSpell(); }}>
-						<Icon name={"clouddownload"}/>
+					<TouchableOpacity style={styles.addSpellButton} key={99} onPress={function () { return _this.newSpell(); }}>
+						<Icon color={"white"} name={"cloud-download"}/>
 					</TouchableOpacity>
 				</View>
 			</View>);

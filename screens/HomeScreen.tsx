@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import * as React from "react";
 import {Actions} from "react-native-router-flux";
-import {Button} from "react-native-elements";
+import {Button, Icon} from "react-native-elements";
 import {SpellbookModel, SpellbookScreen} from "./SpellbookScreen";
 import {SpellModel} from "./SpellScreen";
 var dotProp = require('dot-prop-immutable');
@@ -69,7 +69,13 @@ class HomeScreen extends React.Component<PropType, StateType> {
 						}
 					</ScrollView>
 				</View>
-				<Button buttonStyle={styles.addButton} title={"+"} onPress={() => this.newSpellbook()}/>
+				<TouchableOpacity
+					style={styles.addButton}
+					key={0}
+					onPress={() => this.newSpellbook()}
+				>
+					<Icon color={"white"} name={"add"}/>
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -102,7 +108,21 @@ export const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	
+	addSpellButton: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		width:"49%",
+		height: 40,
+		backgroundColor: '#da6e00',
+	},
+	
 	addButton: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		width:"100%",
+		height: 40,
 		backgroundColor: '#da6e00',
 	},
 	

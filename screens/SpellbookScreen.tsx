@@ -121,19 +121,19 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 				</View>
 				<View style={styles.addSpellContainer}>
 					<TouchableOpacity
-						style={styles.addButton}
+						style={styles.addSpellButton}
 						key={0}
 						onPress={() => this.newSpell()}
 					>
-						<Icon name={"add"}/>
+						<Icon color={"white"} name={"add"}/>
 					</TouchableOpacity>
 					
 					<TouchableOpacity
-						style={styles.addButton}
-						key={0}
+						style={styles.addSpellButton}
+						key={99}
 						onPress={() => this.newSpell()}
 					>
-						<Icon name={"clouddownload"}/>
+						<Icon color={"white"} name={"cloud-download"}/>
 					</TouchableOpacity>
 				</View>
 			</View>

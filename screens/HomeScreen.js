@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
-import { Button } from "react-native-elements";
+import { Icon } from "react-native-elements";
 var dotProp = require('dot-prop-immutable');
 var HomeScreen = /** @class */ (function (_super) {
     __extends(HomeScreen, _super);
@@ -57,7 +57,9 @@ var HomeScreen = /** @class */ (function (_super) {
         })}
 					</ScrollView>
 				</View>
-				<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
+				<TouchableOpacity style={styles.addButton} key={0} onPress={function () { return _this.newSpellbook(); }}>
+					<Icon color={"white"} name={"add"}/>
+				</TouchableOpacity>
 			</View>);
     };
     HomeScreen.prototype.delete = function (index) {
@@ -88,7 +90,20 @@ export var styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
     },
+    addSpellButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "49%",
+        height: 40,
+        backgroundColor: '#da6e00',
+    },
     addButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: 40,
         backgroundColor: '#da6e00',
     },
     container: {
