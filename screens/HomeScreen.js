@@ -50,6 +50,9 @@ var HomeScreen = /** @class */ (function (_super) {
 						{this.state.spellbooks.map(function (spellbook, i) {
             return <TouchableOpacity onPress={function () { return _this.goToSpellbook(spellbook, i); }} style={styles.listItem} key={i}>
 								<Text>{spellbook.name}</Text>
+								<TouchableOpacity style={styles.deleteButton} key={i} onPress={function () { return _this.delete(i); }}>
+									<Text style={styles.deleteButtonText}>{"DELETE"}</Text>
+								</TouchableOpacity>
 							</TouchableOpacity>;
         })}
 					</ScrollView>
@@ -57,12 +60,34 @@ var HomeScreen = /** @class */ (function (_super) {
 				<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpellbook(); }}/>
 			</View>);
     };
+    HomeScreen.prototype.delete = function (index) {
+        var newBook = this.state.spellbooks;
+        newBook.splice(index, 1);
+        this.setState({ spellbooks: newBook });
+    };
     HomeScreen.navigationOptions = {
         title: "Wizard's Companion",
     };
     return HomeScreen;
 }(React.Component));
 export var styles = StyleSheet.create({
+    deleteButtonText: {
+        color: '#ffffff',
+        fontSize: 10,
+    },
+    deleteButton: {
+        height: 30,
+        width: 50,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: 'red',
+    },
+    addSpellContainer: {
+        justifyContent: 'space-between',
+        alignItems: "center",
+        flexDirection: "row",
+    },
     addButton: {
         backgroundColor: '#da6e00',
     },
@@ -88,6 +113,9 @@ export var styles = StyleSheet.create({
         alignSelf: "center"
     },
     listItem: {
+        justifyContent: 'space-between',
+        alignItems: "center",
+        flexDirection: "row",
         borderRadius: 0,
         borderWidth: 0.5,
         borderColor: '#d6d7da',
@@ -95,8 +123,6 @@ export var styles = StyleSheet.create({
         backgroundColor: "#d6d6d6",
         width: "90%",
         height: 40,
-        alignItems: "center",
-        justifyContent: 'center',
         alignSelf: "center",
     },
 });

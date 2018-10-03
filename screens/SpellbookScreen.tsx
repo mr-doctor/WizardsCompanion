@@ -1,11 +1,10 @@
 import {ScrollView, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import {FabConfig, SpellModel} from "./SpellScreen";
-import {Button} from "react-native-elements"
+import {Button, Icon} from "react-native-elements"
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
 import {FloatingAction} from "react-native-floating-action";
-// import {Icon} from "../node_modules/@types/react-native-vector-icons/Icon";
 var dotProp = require('dot-prop-immutable');
 
 
@@ -82,6 +81,21 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 		})
 	}
 	
+	delete(index: number) {
+		let newSpells = this.state.spellbook.spells;
+		newSpells.splice(index, 1);
+		
+		this.setState({
+			spellbook: {
+				spells: newSpells,
+				name: this.state.spellbook.name,
+				id: this.state.spellbook.id,
+			}
+		}, () => {
+			this.props.update(this.props.index, this.state.spellbook)
+		})
+	}
+	
 	render() {
 		return (
 			<View style={styles.container}>
@@ -94,11 +108,34 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 								key={i}
 							>
 								<Text>{spell.name}</Text>
+								<TouchableOpacity
+									style={styles.deleteButton}
+									key={i}
+									onPress={() => this.delete(i)}
+								>
+									<Text style={styles.deleteButtonText}>{"DELETE"}</Text>
+								</TouchableOpacity>
 							</TouchableOpacity>)
 						}
 					</ScrollView>
 				</View>
-				<Button buttonStyle={styles.addButton} title={"+"} onPress={() => this.newSpell()}/>
+				<View style={styles.addSpellContainer}>
+					<TouchableOpacity
+						style={styles.addButton}
+						key={0}
+						onPress={() => this.newSpell()}
+					>
+						<Icon name={"add"}/>
+					</TouchableOpacity>
+					
+					<TouchableOpacity
+						style={styles.addButton}
+						key={0}
+						onPress={() => this.newSpell()}
+					>
+						<Icon name={"clouddownload"}/>
+					</TouchableOpacity>
+				</View>
 			</View>
 		);
 	}
