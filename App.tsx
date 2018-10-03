@@ -27,7 +27,7 @@ class App extends React.Component<{}, StateType> {
 		this.state = {
 			spellbooks: [],
 		};
-
+		
 		const config = {
 			apiKey: "AIzaSyAFpnooV_7daHyqcCqBgDZ39i6mtWNTwCQ",
 			authDomain: "wizard-s-companion-rn.firebaseapp.com",
@@ -36,9 +36,9 @@ class App extends React.Component<{}, StateType> {
 			storageBucket: "wizard-s-companion-rn.appspot.com",
 			messagingSenderId: "426156848049"
 		};
-
+		
 		firebase.initializeApp(config);
-
+		
 		App.firestore = firebase.firestore();
 		const settings = {timestampsInSnapshots: true};
 		App.firestore.settings(settings);

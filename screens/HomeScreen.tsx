@@ -58,6 +58,13 @@ class HomeScreen extends React.Component<PropType, StateType> {
 								key={i}
 							>
 								<Text>{spellbook.name}</Text>
+								<TouchableOpacity
+									style={styles.deleteButton}
+									key={i}
+									onPress={() => this.delete(i)}
+								>
+									<Text style={styles.deleteButtonText}>{"DELETE"}</Text>
+								</TouchableOpacity>
 							</TouchableOpacity>)
 						}
 					</ScrollView>
@@ -66,9 +73,34 @@ class HomeScreen extends React.Component<PropType, StateType> {
 			</View>
 		);
 	}
+	
+	private delete(index: number) {
+		let newBook = this.state.spellbooks;
+		newBook.splice(index, 1);
+		this.setState({spellbooks: newBook});
+	}
 }
 
 export const styles = StyleSheet.create({
+	deleteButtonText: {
+		color: '#ffffff',
+		fontSize: 10,
+	},
+	
+	deleteButton: {
+		height: 30,
+		width: 50,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: 'red',
+	},
+	
+	addSpellContainer: {
+		justifyContent: 'space-between',
+		alignItems: "center",
+		flexDirection: "row",
+	},
 	
 	addButton: {
 		backgroundColor: '#da6e00',
@@ -94,23 +126,24 @@ export const styles = StyleSheet.create({
 		fontSize: 18,
 		textAlign: "justify",
 	},
-
+	
 	dropdown: {
 		width: "90%",
 		alignSelf: "center"
 	},
-
+	
 	listItem: {
+		justifyContent: 'space-between',
+		alignItems: "center",
+		flexDirection: "row",
+		
 		borderRadius: 0,
 		borderWidth: 0.5,
 		borderColor: '#d6d7da',
 		padding: 10,
-
 		backgroundColor: "#d6d6d6",
 		width: "90%",
 		height: 40,
-		alignItems: "center",
-		justifyContent: 'center',
 		alignSelf: "center",
 	},
 });

@@ -14,11 +14,10 @@ var __extends = (this && this.__extends) || (function () {
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import { FabConfig } from "./SpellScreen";
-import { Button } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 import { styles } from "./HomeScreen";
 import { FloatingAction } from "react-native-floating-action";
-// import {Icon} from "../node_modules/@types/react-native-vector-icons/Icon";
 var dotProp = require('dot-prop-immutable');
 var SpellbookScreen = /** @class */ (function (_super) {
     __extends(SpellbookScreen, _super);
@@ -80,6 +79,20 @@ var SpellbookScreen = /** @class */ (function (_super) {
             _this.props.update(_this.props.index, _this.state.spellbook);
         });
     };
+    SpellbookScreen.prototype.delete = function (index) {
+        var _this = this;
+        var newSpells = this.state.spellbook.spells;
+        newSpells.splice(index, 1);
+        this.setState({
+            spellbook: {
+                spells: newSpells,
+                name: this.state.spellbook.name,
+                id: this.state.spellbook.id,
+            }
+        }, function () {
+            _this.props.update(_this.props.index, _this.state.spellbook);
+        });
+    };
     SpellbookScreen.prototype.render = function () {
         var _this = this;
         return (<View style={styles.container}>
@@ -88,11 +101,22 @@ var SpellbookScreen = /** @class */ (function (_super) {
 						{this.state.spellbook.spells.map(function (spell, i) {
             return <TouchableOpacity onPress={function () { return _this.jumpToSpell(spell, i); }} style={styles.listItem} key={i}>
 								<Text>{spell.name}</Text>
+								<TouchableOpacity style={styles.deleteButton} key={i} onPress={function () { return _this.delete(i); }}>
+									<Text style={styles.deleteButtonText}>{"DELETE"}</Text>
+								</TouchableOpacity>
 							</TouchableOpacity>;
         })}
 					</ScrollView>
 				</View>
-				<Button buttonStyle={styles.addButton} title={"+"} onPress={function () { return _this.newSpell(); }}/>
+				<View style={styles.addSpellContainer}>
+					<TouchableOpacity style={styles.addButton} key={0} onPress={function () { return _this.newSpell(); }}>
+						<Icon name={"add"}/>
+					</TouchableOpacity>
+					
+					<TouchableOpacity style={styles.addButton} key={0} onPress={function () { return _this.newSpell(); }}>
+						<Icon name={"clouddownload"}/>
+					</TouchableOpacity>
+				</View>
 			</View>);
     };
     SpellbookScreen.prototype.fabButton = function () {
