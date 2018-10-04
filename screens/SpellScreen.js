@@ -14,12 +14,13 @@ var __extends = (this && this.__extends) || (function () {
 import { View, Text } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
-import { styles } from "./HomeScreen";
+import { colours, styles } from "./HomeScreen";
 import { FloatingAction } from 'react-native-floating-action';
 import App from "../App";
 export var FabConfig = {
     edit: {
         text: "Edit",
+        icon: require('../images/edit_white_18dp.png'),
         name: "edit",
         position: 2,
     },
@@ -84,7 +85,7 @@ var SpellScreen = /** @class */ (function (_super) {
                 position: FabConfig.upload.position,
                 name: FabConfig.upload.name,
             }];
-        return (<FloatingAction actions={actions} onPressItem={function (name) {
+        return (<FloatingAction color={colours.accentColour} actions={actions} onPressItem={function (name) {
             if (FabConfig.edit.name.localeCompare(name + "") == 0) {
                 _this.edit();
             }

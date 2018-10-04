@@ -72,6 +72,10 @@ var HomeScreen = /** @class */ (function (_super) {
     };
     return HomeScreen;
 }(React.Component));
+export var colours = {
+    accentColour: '#da6e00',
+    deleteButtonColour: "red",
+};
 export var styles = StyleSheet.create({
     deleteButtonText: {
         color: '#ffffff',
@@ -83,7 +87,7 @@ export var styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: 'red',
+        backgroundColor: colours.deleteButtonColour,
     },
     importButton: {
         height: "90%",
@@ -115,7 +119,7 @@ export var styles = StyleSheet.create({
         justifyContent: "center",
         width: "49%",
         height: 40,
-        backgroundColor: '#da6e00',
+        backgroundColor: colours.accentColour,
     },
     addButton: {
         flexDirection: "row",
@@ -123,7 +127,7 @@ export var styles = StyleSheet.create({
         justifyContent: "center",
         width: "100%",
         height: 40,
-        backgroundColor: '#da6e00',
+        backgroundColor: colours.accentColour,
     },
     container: {
         flex: 1,

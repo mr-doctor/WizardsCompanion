@@ -5,6 +5,7 @@ import {FormInput, FormLabel} from "react-native-elements";
 import {FabConfig, SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {FloatingAction} from "react-native-floating-action";
+import {colours} from "./HomeScreen";
 
 type PropType = {
 	spellbook: SpellbookModel
@@ -42,7 +43,7 @@ export class SpellbookEditScreen extends React.Component<PropType, StateType> {
 			<View style={{flex: 1, backgroundColor: '#f3f3f3'}}>
 				<FormLabel>Name</FormLabel>
 				<FormInput defaultValue={this.state.spellbook.name} onChangeText={(text: string) => this.setState({newName: text})}/>
-				<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.save();}}/>
+				<FloatingAction actions={[FabConfig.save]} color={colours.accentColour} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.save();}}/>
 			</View>);
 	}
 }

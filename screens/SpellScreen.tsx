@@ -2,7 +2,7 @@ import {Button, View, Text} from "react-native";
 import * as React from "react";
 import {SpellbookModel} from "./SpellbookScreen";
 import {Actions} from "react-native-router-flux";
-import {styles} from "./HomeScreen";
+import {colours, styles} from "./HomeScreen";
 import {FloatingAction} from 'react-native-floating-action';
 import App from "../App";
 
@@ -21,6 +21,7 @@ type StateType = {
 export const FabConfig = {
 	edit: {
 		text: "Edit",
+		icon: require('../images/edit_white_18dp.png'),
 		name: "edit",
 		position: 2,
 	},
@@ -91,7 +92,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 			name: FabConfig.upload.name,
 		}];
 		return (
-			<FloatingAction actions={actions} onPressItem={
+			<FloatingAction color={colours.accentColour} actions={actions} onPressItem={
 				(name) => {
 					if (FabConfig.edit.name.localeCompare(name + "") == 0) {
 						this.edit();

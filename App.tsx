@@ -71,12 +71,6 @@ class App extends React.Component<{}, StateType> {
 		return collectionReference.get();
 	}
 	
-	static downloadSpellsFrom(spellbookID: string): Promise<QuerySnapshot> {
-		const collectionReference = App.firestore.collection(spellbookID);
-		
-		return collectionReference.get();
-	}
-	
 	static displaySpells(querySnapshot: QuerySnapshot): SpellModel[] {
 		if (querySnapshot.empty) {
 			console.log("No docs found");

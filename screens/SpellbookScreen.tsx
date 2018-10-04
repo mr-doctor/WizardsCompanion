@@ -3,7 +3,7 @@ import * as React from "react";
 import {FabConfig, SpellModel} from "./SpellScreen";
 import {Button, Icon} from "react-native-elements"
 import {Actions} from "react-native-router-flux";
-import {styles} from "./HomeScreen";
+import {colours, styles} from "./HomeScreen";
 import {FloatingAction} from "react-native-floating-action";
 import App from "../App";
 import * as firebase from "firebase";
@@ -123,6 +123,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 							</TouchableOpacity>)
 						}
 					</ScrollView>
+					{this.fabButton()}
 				</View>
 				<View style={styles.addSpellContainer}>
 					<TouchableOpacity
@@ -146,17 +147,8 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	fabButton() {
-		const actions = [{
-			text: FabConfig.edit.text,
-			position: FabConfig.edit.position,
-			name: FabConfig.edit.name,
-		}, {
-			text: FabConfig.upload.text,
-			position: FabConfig.upload.position,
-			name: FabConfig.upload.name,
-		}];
 		return (
-			<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.edit();}}/>
+			<FloatingAction color={colours.accentColour} actions={[FabConfig.save]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.edit();}}/>
 		)
 	}
 	

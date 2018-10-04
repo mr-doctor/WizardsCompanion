@@ -62,10 +62,6 @@ var App = /** @class */ (function (_super) {
         var collectionReference = App.firestore.collection("Spells");
         return collectionReference.get();
     };
-    App.downloadSpellsFrom = function (spellbookID) {
-        var collectionReference = App.firestore.collection(spellbookID);
-        return collectionReference.get();
-    };
     App.displaySpells = function (querySnapshot) {
         if (querySnapshot.empty) {
             console.log("No docs found");

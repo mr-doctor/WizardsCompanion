@@ -87,6 +87,11 @@ class HomeScreen extends React.Component<PropType, StateType> {
 	}
 }
 
+export const colours = {
+	accentColour: '#da6e00',
+	deleteButtonColour: "red",
+};
+
 export const styles = StyleSheet.create({
 	deleteButtonText: {
 		color: '#ffffff',
@@ -99,7 +104,7 @@ export const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: 'red',
+		backgroundColor: colours.deleteButtonColour,
 	},
 
 	importButton: {
@@ -130,14 +135,14 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 		flexDirection: "row",
 	},
-	
+
 	addSpellButton: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
 		width:"49%",
 		height: 40,
-		backgroundColor: '#da6e00',
+		backgroundColor: colours.accentColour,
 	},
 	
 	addButton: {
@@ -146,7 +151,7 @@ export const styles = StyleSheet.create({
 		justifyContent: "center",
 		width:"100%",
 		height: 40,
-		backgroundColor: '#da6e00',
+		backgroundColor: colours.accentColour,
 	},
 	
 	container: {

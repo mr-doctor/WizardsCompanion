@@ -16,7 +16,7 @@ import * as React from "react";
 import { FabConfig } from "./SpellScreen";
 import { Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
-import { styles } from "./HomeScreen";
+import { colours, styles } from "./HomeScreen";
 import { FloatingAction } from "react-native-floating-action";
 var dotProp = require('dot-prop-immutable');
 var SpellbookScreen = /** @class */ (function (_super) {
@@ -109,6 +109,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
 							</TouchableOpacity>;
         })}
 					</ScrollView>
+					{this.fabButton()}
 				</View>
 				<View style={styles.addSpellContainer}>
 					<TouchableOpacity style={styles.addSpellButton} key={0} onPress={function () { return _this.newSpell(); }}>
@@ -123,16 +124,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
     };
     SpellbookScreen.prototype.fabButton = function () {
         var _this = this;
-        var actions = [{
-                text: FabConfig.edit.text,
-                position: FabConfig.edit.position,
-                name: FabConfig.edit.name,
-            }, {
-                text: FabConfig.upload.text,
-                position: FabConfig.upload.position,
-                name: FabConfig.upload.name,
-            }];
-        return (<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.edit(); }}/>);
+        return (<FloatingAction color={colours.accentColour} actions={[FabConfig.save]} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.edit(); }}/>);
     };
     SpellbookScreen.prototype.edit = function () {
         Actions.push("spellbook-edit", { spellbook: this.state.spellbook, update: this.updateName.bind(this) });
