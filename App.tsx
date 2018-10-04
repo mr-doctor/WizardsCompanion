@@ -9,6 +9,7 @@ import {SpellModel, SpellScreen} from "./screens/SpellScreen";
 import {SpellEditScreen} from "./screens/SpellEditScreen";
 import {CollectionReference, DocumentSnapshot, QuerySnapshot} from "react-native-firebase/firestore";
 import {SpellbookEditScreen} from "./screens/SpellbookEditScreen";
+import {SpellImportScreen} from "./screens/SpellImportScreen";
 const firebase = require("firebase");
 // Required for side-effects
 require("firebase/firestore");
@@ -67,7 +68,6 @@ class App extends React.Component<{}, StateType> {
 	
 	static downloadAllSpells(): Promise<QuerySnapshot> {
 		const collectionReference = App.firestore.collection("Spells");
-		
 		return collectionReference.get();
 	}
 	
@@ -88,8 +88,9 @@ class App extends React.Component<{}, StateType> {
 			let spell = JSON.parse(JSON.stringify(data));
 			spells.push(spell);
 		});
-		
+
 		return spells;
+
 	}
 	
 	render() {
@@ -101,6 +102,7 @@ class App extends React.Component<{}, StateType> {
 					<Scene key="spell" component={SpellScreen} title="Spell"/>
 					<Scene key="spell-edit" component={SpellEditScreen} title={"Spell Edit"}/>
 					<Scene key="spellbook-edit" component={SpellbookEditScreen} title="Spellbook Edit"/>
+					<Scene key="spell-import" component={SpellImportScreen} title="Spellbook Import"/>
 				</Stack>
 			</Router>
 		);

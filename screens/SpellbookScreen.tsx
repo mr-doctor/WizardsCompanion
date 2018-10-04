@@ -5,6 +5,9 @@ import {Button, Icon} from "react-native-elements"
 import {Actions} from "react-native-router-flux";
 import {styles} from "./HomeScreen";
 import {FloatingAction} from "react-native-floating-action";
+import App from "../App";
+import * as firebase from "firebase";
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 var dotProp = require('dot-prop-immutable');
 
 
@@ -29,6 +32,8 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 	}
 	
 	update(spell: SpellModel, index: number) {
+		spell.spellbookID = this.state.spellbook.id;
+		spell.spellbookName = this.state.spellbook.name;
 		console.log(index);
 		this.setState(dotProp.set(this.state, `spellbook.spells.${index}`, spell), () => {
 			this.props.update(this.props.index, this.state.spellbook);
@@ -131,7 +136,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 					<TouchableOpacity
 						style={styles.addSpellButton}
 						key={99}
-						onPress={() => this.newSpell()}
+						onPress={() => this.jumpToImport()}
 					>
 						<Icon color={"white"} name={"cloud-download"}/>
 					</TouchableOpacity>
@@ -157,6 +162,15 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 	
 	edit() {
 		Actions.push("spellbook-edit", {spellbook: this.state.spellbook, update: this.updateName.bind(this)});
+	}
+
+	jumpToImport() {
+		let imports: SpellbookModel = {
+			spells: [],
+			name: "Import Spell",
+			id: "",
+		};
+		Actions.push("spell-import", {spellbook: imports, title: imports.name, index: this.props.index, update: this.update.bind(this)})
 	}
 }
 

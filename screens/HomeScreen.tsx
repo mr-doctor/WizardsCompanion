@@ -26,7 +26,7 @@ class HomeScreen extends React.Component<PropType, StateType> {
 	};
 	
 	goToSpellbook(spellbook: SpellbookModel, index: number) {
-		Actions.push("spellbook", {spellbook: spellbook, title: spellbook.name, index: index, update: this.updateSpellbook.bind(this)});
+		Actions.push("spellbook", {spellbook: spellbook, title: spellbook.name, index: index, update: this.updateSpellbook.bind(this), edit: true});
 	}
 	
 	newSpellbook() {
@@ -101,9 +101,28 @@ export const styles = StyleSheet.create({
 		justifyContent: "center",
 		backgroundColor: 'red',
 	},
+
+	importButton: {
+		height: "90%",
+		width: 50,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: '#f3f3f3',
+	},
+
+	importButtonText: {
+		color: '#000000',
+		fontSize: 10,
+	},
 	
 	listText: {
 		marginLeft: 5,
+	},
+
+	loadingMessage: {
+		marginTop: 15,
+		alignSelf: "center",
 	},
 	
 	addSpellContainer: {

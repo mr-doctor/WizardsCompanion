@@ -18,6 +18,7 @@ import { HomeScreen } from "./screens/HomeScreen";
 import { SpellScreen } from "./screens/SpellScreen";
 import { SpellEditScreen } from "./screens/SpellEditScreen";
 import { SpellbookEditScreen } from "./screens/SpellbookEditScreen";
+import { SpellImportScreen } from "./screens/SpellImportScreen";
 var firebase = require("firebase");
 // Required for side-effects
 require("firebase/firestore");
@@ -86,6 +87,7 @@ var App = /** @class */ (function (_super) {
 					<Scene key="spell" component={SpellScreen} title="Spell"/>
 					<Scene key="spell-edit" component={SpellEditScreen} title={"Spell Edit"}/>
 					<Scene key="spellbook-edit" component={SpellbookEditScreen} title="Spellbook Edit"/>
+					<Scene key="spell-import" component={SpellImportScreen} title="Spellbook Import"/>
 				</Stack>
 			</Router>);
     };

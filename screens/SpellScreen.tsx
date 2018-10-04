@@ -9,11 +9,13 @@ import App from "../App";
 type ScreenProps = {
 	spell: SpellModel;
 	index: number;
-	update: (spell: SpellModel, index: number) => {}
+	update: (spell: SpellModel, index: number) => {};
+	edit: boolean;
 }
 
 type StateType = {
 	spell: SpellModel;
+	edit: boolean;
 }
 
 export const FabConfig = {
@@ -41,6 +43,7 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 
 		this.state = {
 			spell: props.spell,
+			edit: props.edit,
 		};
 
 	}

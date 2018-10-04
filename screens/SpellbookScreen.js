@@ -30,6 +30,8 @@ var SpellbookScreen = /** @class */ (function (_super) {
     }
     SpellbookScreen.prototype.update = function (spell, index) {
         var _this = this;
+        spell.spellbookID = this.state.spellbook.id;
+        spell.spellbookName = this.state.spellbook.name;
         console.log(index);
         this.setState(dotProp.set(this.state, "spellbook.spells." + index, spell), function () {
             _this.props.update(_this.props.index, _this.state.spellbook);
@@ -113,7 +115,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
 						<Icon color={"white"} name={"add"}/>
 					</TouchableOpacity>
 					
-					<TouchableOpacity style={styles.addSpellButton} key={99} onPress={function () { return _this.newSpell(); }}>
+					<TouchableOpacity style={styles.addSpellButton} key={99} onPress={function () { return _this.jumpToImport(); }}>
 						<Icon color={"white"} name={"cloud-download"}/>
 					</TouchableOpacity>
 				</View>
@@ -134,6 +136,14 @@ var SpellbookScreen = /** @class */ (function (_super) {
     };
     SpellbookScreen.prototype.edit = function () {
         Actions.push("spellbook-edit", { spellbook: this.state.spellbook, update: this.updateName.bind(this) });
+    };
+    SpellbookScreen.prototype.jumpToImport = function () {
+        var imports = {
+            spells: [],
+            name: "Import Spell",
+            id: "",
+        };
+        Actions.push("spell-import", { spellbook: imports, title: imports.name, index: this.props.index, update: this.update.bind(this) });
     };
     return SpellbookScreen;
 }(React.Component));

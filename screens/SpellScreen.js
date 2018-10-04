@@ -40,6 +40,7 @@ var SpellScreen = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.state = {
             spell: props.spell,
+            edit: props.edit,
         };
         return _this;
     }
