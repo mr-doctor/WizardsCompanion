@@ -12,11 +12,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import * as React from "react";
-import { FabConfig } from "./SpellScreen";
 import { View, ScrollView } from "react-native";
 import { FormLabel, FormInput } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
-import { styles } from "./HomeScreen";
+import { colours, FabConfig, styles } from "./HomeScreen";
 import { FloatingAction } from "react-native-floating-action";
 import { Actions } from "react-native-router-flux";
 var SpellEditScreen = /** @class */ (function (_super) {
@@ -78,7 +77,7 @@ var SpellEditScreen = /** @class */ (function (_super) {
 				<FormLabel>Description</FormLabel>
 				<FormInput defaultValue={this.state.spell.desc} onChangeText={function (text) { return _this.setDesc(text); }}/>
 			</ScrollView>
-			<FloatingAction actions={[FabConfig.save]} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.save(); }}/>
+			<FloatingAction actions={[FabConfig.save]} color={colours.accentColour} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.save(); }}/>
 		</View>);
     };
     SpellEditScreen.prototype.renderDuration = function () {

@@ -2,10 +2,10 @@ import {SpellbookModel} from "./SpellbookScreen";
 import * as React from "react";
 import {ScrollView, View} from "react-native";
 import {FormInput, FormLabel} from "react-native-elements";
-import {FabConfig, SpellModel} from "./SpellScreen";
+import {SpellModel} from "./SpellScreen";
 import {Actions} from "react-native-router-flux";
 import {FloatingAction} from "react-native-floating-action";
-import {colours} from "./HomeScreen";
+import {colours, FabConfig} from "./HomeScreen";
 
 type PropType = {
 	spellbook: SpellbookModel

@@ -14,10 +14,9 @@ var __extends = (this && this.__extends) || (function () {
 import * as React from "react";
 import { View } from "react-native";
 import { FormInput, FormLabel } from "react-native-elements";
-import { FabConfig } from "./SpellScreen";
 import { Actions } from "react-native-router-flux";
 import { FloatingAction } from "react-native-floating-action";
-import { colours } from "./HomeScreen";
+import { colours, FabConfig } from "./HomeScreen";
 var SpellbookEditScreen = /** @class */ (function (_super) {
     __extends(SpellbookEditScreen, _super);
     function SpellbookEditScreen(props) {

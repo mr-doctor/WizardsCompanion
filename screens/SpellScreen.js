@@ -14,27 +14,9 @@ var __extends = (this && this.__extends) || (function () {
 import { View, Text } from "react-native";
 import * as React from "react";
 import { Actions } from "react-native-router-flux";
-import { colours, styles } from "./HomeScreen";
+import { colours, FabConfig, styles } from "./HomeScreen";
 import { FloatingAction } from 'react-native-floating-action';
 import App from "../App";
-export var FabConfig = {
-    edit: {
-        text: "Edit",
-        icon: require('../images/edit_white_18dp.png'),
-        name: "edit",
-        position: 2,
-    },
-    upload: {
-        text: "Upload",
-        name: "upload",
-        position: 1,
-    },
-    save: {
-        text: "Save",
-        name: "save",
-        position: 1,
-    }
-};
 var SpellScreen = /** @class */ (function (_super) {
     __extends(SpellScreen, _super);
     function SpellScreen(props) {
@@ -76,16 +58,7 @@ var SpellScreen = /** @class */ (function (_super) {
     };
     SpellScreen.prototype.fabButton = function () {
         var _this = this;
-        var actions = [{
-                text: FabConfig.edit.text,
-                position: FabConfig.edit.position,
-                name: FabConfig.edit.name,
-            }, {
-                text: FabConfig.upload.text,
-                position: FabConfig.upload.position,
-                name: FabConfig.upload.name,
-            }];
-        return (<FloatingAction color={colours.accentColour} actions={actions} onPressItem={function (name) {
+        return (<FloatingAction actions={[FabConfig.editSmall, FabConfig.uploadSmall]} color={colours.accentColour} onPressItem={function (name) {
             if (FabConfig.edit.name.localeCompare(name + "") == 0) {
                 _this.edit();
             }

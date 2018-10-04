@@ -1,9 +1,9 @@
 import {ScrollView, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
-import {FabConfig, SpellModel} from "./SpellScreen";
+import {SpellModel} from "./SpellScreen";
 import {Button, Icon} from "react-native-elements"
 import {Actions} from "react-native-router-flux";
-import {colours, styles} from "./HomeScreen";
+import {colours, FabConfig, styles} from "./HomeScreen";
 import {FloatingAction} from "react-native-floating-action";
 import App from "../App";
 import * as firebase from "firebase";
@@ -148,7 +148,7 @@ class SpellbookScreen extends React.Component<ScreenProps, StateType> {
 	
 	fabButton() {
 		return (
-			<FloatingAction color={colours.accentColour} actions={[FabConfig.save]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.edit();}}/>
+			<FloatingAction color={colours.accentColour} actions={[FabConfig.edit]} overrideWithAction={true} onPressItem={(name) => {console.log(name); this.edit();}}/>
 		)
 	}
 	

@@ -13,10 +13,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
-import { FabConfig } from "./SpellScreen";
 import { Icon } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
-import { colours, styles } from "./HomeScreen";
+import { colours, FabConfig, styles } from "./HomeScreen";
 import { FloatingAction } from "react-native-floating-action";
 var dotProp = require('dot-prop-immutable');
 var SpellbookScreen = /** @class */ (function (_super) {
@@ -124,7 +123,7 @@ var SpellbookScreen = /** @class */ (function (_super) {
     };
     SpellbookScreen.prototype.fabButton = function () {
         var _this = this;
-        return (<FloatingAction color={colours.accentColour} actions={[FabConfig.save]} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.edit(); }}/>);
+        return (<FloatingAction color={colours.accentColour} actions={[FabConfig.edit]} overrideWithAction={true} onPressItem={function (name) { console.log(name); _this.edit(); }}/>);
     };
     SpellbookScreen.prototype.edit = function () {
         Actions.push("spellbook-edit", { spellbook: this.state.spellbook, update: this.updateName.bind(this) });

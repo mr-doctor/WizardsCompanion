@@ -76,6 +76,40 @@ export var colours = {
     accentColour: '#da6e00',
     deleteButtonColour: "red",
 };
+export var FabConfig = {
+    edit: {
+        text: "Edit",
+        icon: require('../images/baseline_edit_white_48dp.png'),
+        name: "edit",
+        position: 2,
+    },
+    upload: {
+        text: "Upload",
+        icon: require("../images/baseline_cloud_upload_white_48dp.png"),
+        name: "upload",
+        position: 1,
+    },
+    save: {
+        text: "Save",
+        name: "save",
+        icon: require("../images/baseline_save_white_48dp.png"),
+        position: 1,
+    },
+    editSmall: {
+        text: "Edit",
+        color: colours.accentColour,
+        icon: require('../images/1x_baseline_edit_white_48dp.png'),
+        name: "edit",
+        position: 2,
+    },
+    uploadSmall: {
+        text: "Upload",
+        color: colours.accentColour,
+        icon: require("../images/1x_baseline_cloud_upload_white_48dp.png"),
+        name: "upload",
+        position: 1,
+    },
+};
 export var styles = StyleSheet.create({
     deleteButtonText: {
         color: '#ffffff',

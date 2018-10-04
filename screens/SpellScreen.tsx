@@ -2,7 +2,7 @@ import {Button, View, Text} from "react-native";
 import * as React from "react";
 import {SpellbookModel} from "./SpellbookScreen";
 import {Actions} from "react-native-router-flux";
-import {colours, styles} from "./HomeScreen";
+import {colours, FabConfig, styles} from "./HomeScreen";
 import {FloatingAction} from 'react-native-floating-action';
 import App from "../App";
 
@@ -17,25 +17,6 @@ type StateType = {
 	spell: SpellModel;
 	edit: boolean;
 }
-
-export const FabConfig = {
-	edit: {
-		text: "Edit",
-		icon: require('../images/edit_white_18dp.png'),
-		name: "edit",
-		position: 2,
-	},
-	upload: {
-		text: "Upload",
-		name: "upload",
-		position: 1,
-	},
-	save: {
-		text: "Save",
-		name: "save",
-		position: 1,
-	}
-};
 
 class SpellScreen extends React.Component<ScreenProps, StateType> {
 
@@ -82,25 +63,18 @@ class SpellScreen extends React.Component<ScreenProps, StateType> {
 	}
 
 	fabButton() {
-		const actions = [{
-			text: FabConfig.edit.text,
-			position: FabConfig.edit.position,
-			name: FabConfig.edit.name,
-		}, {
-			text: FabConfig.upload.text,
-			position: FabConfig.upload.position,
-			name: FabConfig.upload.name,
-		}];
 		return (
-			<FloatingAction color={colours.accentColour} actions={actions} onPressItem={
-				(name) => {
-					if (FabConfig.edit.name.localeCompare(name + "") == 0) {
-						this.edit();
-					} else {
-						this.upload();
-					}
-				}
-			}/>
+			<FloatingAction actions={[FabConfig.editSmall, FabConfig.uploadSmall]}
+			                color={colours.accentColour}
+			                onPressItem={
+				                (name) => {
+					                if (FabConfig.edit.name.localeCompare(name + "") == 0) {
+						                this.edit();
+					                } else {
+						                this.upload();
+					                }
+				                }
+			                }/>
 		)
 	}
 	
